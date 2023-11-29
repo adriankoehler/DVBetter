@@ -1,0 +1,483 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0FBC70E5A5B8702EEA242945 /* libdvbetter_lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36882F12D9F0B4E8E384C407 /* libdvbetter_lib.a */; };
+		39AF0202100ACC80739976CE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65EC465F820ED1DFB7033F60 /* CoreGraphics.framework */; };
+		3A868FA3C9B2BDD5FC0E1A4C /* libdvbetter_lib.a in Resources */ = {isa = PBXBuildFile; fileRef = F3158607C2B7BB532E13E6B1 /* libdvbetter_lib.a */; };
+		53D3E8B81B984163587409CF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCA0C0411E93AC7A86F9CDAB /* WebKit.framework */; };
+		642B3AEEBDA38E40416F2B86 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = D80BDC3187F5AEF2A383C10D /* main.mm */; };
+		87F90E09ACF6A049CE6EB77B /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 498BF45E56580A5B86A5550C /* assets */; };
+		B96E7C739587F5690CE7F83E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEB0F5F44E6E3B4128DE127D /* UIKit.framework */; };
+		CE6C2C367BAA1D2CD03F9D27 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DEB3895CC27428E5EE6214 /* QuartzCore.framework */; };
+		D42B579066F3BB2A0021E105 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDAFE7C7066748709A59289D /* MetalKit.framework */; };
+		E72C64FCB3441D58519B30E4 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7A561B82E7C2F32C1342446 /* Metal.framework */; };
+		F286E432F9BCC7BE2284A9D1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB801A87026573620632F857 /* Security.framework */; };
+		F2CB967E238961ADB08CD8F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDB788BAC5713AF64D02FFF1 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		04DEB3895CC27428E5EE6214 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		21F2D667B76B810BDC7A39B2 /* lib.rs */ = {isa = PBXFileReference; path = lib.rs; sourceTree = "<group>"; };
+		36882F12D9F0B4E8E384C407 /* libdvbetter_lib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdvbetter_lib.a; sourceTree = "<group>"; };
+		3B906EFB54463193062E6EC3 /* dvbetter_iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = dvbetter_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		498BF45E56580A5B86A5550C /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = SOURCE_ROOT; };
+		4C2D1CF5E9E94403ADA080AA /* dvbetter_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = dvbetter_iOS.entitlements; sourceTree = "<group>"; };
+		4E375A17B0B7E86A023478F3 /* bindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bindings.h; sourceTree = "<group>"; };
+		65EC465F820ED1DFB7033F60 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		7F7CF809DC008E17CDB17F1A /* main.rs */ = {isa = PBXFileReference; path = main.rs; sourceTree = "<group>"; };
+		AB01422A9990B14FE4A1ECB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BEB0F5F44E6E3B4128DE127D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		CB801A87026573620632F857 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		D7A561B82E7C2F32C1342446 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		D80BDC3187F5AEF2A383C10D /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		DCA0C0411E93AC7A86F9CDAB /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		EDB788BAC5713AF64D02FFF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F3158607C2B7BB532E13E6B1 /* libdvbetter_lib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdvbetter_lib.a; sourceTree = "<group>"; };
+		FDAFE7C7066748709A59289D /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		33F85B20B0962AC36330F7FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0FBC70E5A5B8702EEA242945 /* libdvbetter_lib.a in Frameworks */,
+				39AF0202100ACC80739976CE /* CoreGraphics.framework in Frameworks */,
+				E72C64FCB3441D58519B30E4 /* Metal.framework in Frameworks */,
+				D42B579066F3BB2A0021E105 /* MetalKit.framework in Frameworks */,
+				CE6C2C367BAA1D2CD03F9D27 /* QuartzCore.framework in Frameworks */,
+				F286E432F9BCC7BE2284A9D1 /* Security.framework in Frameworks */,
+				B96E7C739587F5690CE7F83E /* UIKit.framework in Frameworks */,
+				53D3E8B81B984163587409CF /* WebKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03E803B498632A0E288222B0 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				E5911D66845ADDBC44B68D73 /* dvbetter */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		11BF6CA7742F6D625601BF39 /* debug */ = {
+			isa = PBXGroup;
+			children = (
+				F3158607C2B7BB532E13E6B1 /* libdvbetter_lib.a */,
+			);
+			path = debug;
+			sourceTree = "<group>";
+		};
+		12A168B50DBB837D93864BCC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3B906EFB54463193062E6EC3 /* dvbetter_iOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		20EF49FFF9E730FF49143EC7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				65EC465F820ED1DFB7033F60 /* CoreGraphics.framework */,
+				36882F12D9F0B4E8E384C407 /* libdvbetter_lib.a */,
+				D7A561B82E7C2F32C1342446 /* Metal.framework */,
+				FDAFE7C7066748709A59289D /* MetalKit.framework */,
+				04DEB3895CC27428E5EE6214 /* QuartzCore.framework */,
+				CB801A87026573620632F857 /* Security.framework */,
+				BEB0F5F44E6E3B4128DE127D /* UIKit.framework */,
+				DCA0C0411E93AC7A86F9CDAB /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		23E1946024B3A4AFD592E42E /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+				873B947CC2143DA1D2C5D870 /* arm64-sim */,
+			);
+			path = Externals;
+			sourceTree = "<group>";
+		};
+		7F7670B00D349E128318C436 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				21F2D667B76B810BDC7A39B2 /* lib.rs */,
+				7F7CF809DC008E17CDB17F1A /* main.rs */,
+			);
+			name = src;
+			path = ../../src;
+			sourceTree = "<group>";
+		};
+		873B947CC2143DA1D2C5D870 /* arm64-sim */ = {
+			isa = PBXGroup;
+			children = (
+				11BF6CA7742F6D625601BF39 /* debug */,
+			);
+			path = "arm64-sim";
+			sourceTree = "<group>";
+		};
+		9546591DDBBD422160FFD562 = {
+			isa = PBXGroup;
+			children = (
+				498BF45E56580A5B86A5550C /* assets */,
+				EDB788BAC5713AF64D02FFF1 /* Assets.xcassets */,
+				9D62B997F58F0ACC21BFCAE4 /* dvbetter_iOS */,
+				23E1946024B3A4AFD592E42E /* Externals */,
+				03E803B498632A0E288222B0 /* Sources */,
+				7F7670B00D349E128318C436 /* src */,
+				20EF49FFF9E730FF49143EC7 /* Frameworks */,
+				12A168B50DBB837D93864BCC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9D62B997F58F0ACC21BFCAE4 /* dvbetter_iOS */ = {
+			isa = PBXGroup;
+			children = (
+				4C2D1CF5E9E94403ADA080AA /* dvbetter_iOS.entitlements */,
+				AB01422A9990B14FE4A1ECB3 /* Info.plist */,
+			);
+			path = dvbetter_iOS;
+			sourceTree = "<group>";
+		};
+		E5911D66845ADDBC44B68D73 /* dvbetter */ = {
+			isa = PBXGroup;
+			children = (
+				D80BDC3187F5AEF2A383C10D /* main.mm */,
+				FCA90459672B51F06090244D /* bindings */,
+			);
+			path = dvbetter;
+			sourceTree = "<group>";
+		};
+		FCA90459672B51F06090244D /* bindings */ = {
+			isa = PBXGroup;
+			children = (
+				4E375A17B0B7E86A023478F3 /* bindings.h */,
+			);
+			path = bindings;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		70D3BEA221C39DC329A4EBF7 /* dvbetter_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01E5038A2EC3E0E5DC5E70E /* Build configuration list for PBXNativeTarget "dvbetter_iOS" */;
+			buildPhases = (
+				626573F0032F92D8748F0CE9 /* Build Rust Code */,
+				CA4334BF5A18A0B257D1C5E3 /* Sources */,
+				8069A6EFB258CE088F3862D9 /* Resources */,
+				33F85B20B0962AC36330F7FD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dvbetter_iOS;
+			productName = dvbetter_iOS;
+			productReference = 3B906EFB54463193062E6EC3 /* dvbetter_iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B9ED88BA9033B328F6ED01A6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					70D3BEA221C39DC329A4EBF7 = {
+						DevelopmentTeam = deeznuts;
+					};
+				};
+			};
+			buildConfigurationList = 76962683A63A6E783104D89D /* Build configuration list for PBXProject "dvbetter" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 9546591DDBBD422160FFD562;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				70D3BEA221C39DC329A4EBF7 /* dvbetter_iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8069A6EFB258CE088F3862D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2CB967E238961ADB08CD8F9 /* Assets.xcassets in Resources */,
+				87F90E09ACF6A049CE6EB77B /* assets in Resources */,
+				3A868FA3C9B2BDD5FC0E1A4C /* libdvbetter_lib.a in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		626573F0032F92D8748F0CE9 /* Build Rust Code */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Rust Code";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/target/aarch64-apple-ios/${CONFIGURATION}/deps/libdvbetter_lib.a",
+				"$(SRCROOT)/target/x86_64-apple-ios/${CONFIGURATION}/deps/libdvbetter_lib.a",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "pnpm tauri ios xcode-script -v --platform ${PLATFORM_DISPLAY_NAME:?} --sdk-root ${SDKROOT:?} --framework-search-paths \"${FRAMEWORK_SEARCH_PATHS:?}\" --header-search-paths \"${HEADER_SEARCH_PATHS:?}\" --gcc-preprocessor-definitions \"${GCC_PREPROCESSOR_DEFINITIONS:-}\" --configuration ${CONFIGURATION:?} ${FORCE_COLOR} ${ARCHS:?}";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CA4334BF5A18A0B257D1C5E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				642B3AEEBDA38E40416F2B86 /* main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		39908C3BA32549A1B5C1B4BC /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = (
+					arm64,
+					"arm64-sim",
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = dvbetter_iOS/dvbetter_iOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = deeznuts;
+				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "arm64-sim x86_64";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\".\"",
+				);
+				INFOPLIST_FILE = dvbetter_iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=arm64-sim]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64-sim/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(inherited) $(PROJECT_DIR)/Externals/x86_64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dvbetter.dvbetter;
+				PRODUCT_NAME = dvbetter;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64  arm64-sim";
+			};
+			name = debug;
+		};
+		40DDA379D74C4A51C1CA80CF /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = (
+					arm64,
+					"arm64-sim",
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = dvbetter_iOS/dvbetter_iOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = deeznuts;
+				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "arm64-sim x86_64";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\".\"",
+				);
+				INFOPLIST_FILE = dvbetter_iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=arm64-sim]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64-sim/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(inherited) $(PROJECT_DIR)/Externals/x86_64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dvbetter.dvbetter;
+				PRODUCT_NAME = dvbetter;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64  arm64-sim";
+			};
+			name = release;
+		};
+		8D83948AC46C05F77FFAC853 /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = debug;
+		};
+		F938806920AFA58F8EF7D89F /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		76962683A63A6E783104D89D /* Build configuration list for PBXProject "dvbetter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8D83948AC46C05F77FFAC853 /* debug */,
+				F938806920AFA58F8EF7D89F /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = debug;
+		};
+		C01E5038A2EC3E0E5DC5E70E /* Build configuration list for PBXNativeTarget "dvbetter_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				39908C3BA32549A1B5C1B4BC /* debug */,
+				40DDA379D74C4A51C1CA80CF /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B9ED88BA9033B328F6ED01A6 /* Project object */;
+}
