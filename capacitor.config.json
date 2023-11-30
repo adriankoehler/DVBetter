@@ -1,0 +1,10 @@
+{
+	"appId": "com.dvbetter.dvbetter",
+	"appName": "dvbetter",
+	"webDir": "dist",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		}
+	}
+}
