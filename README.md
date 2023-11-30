@@ -1,6 +1,7 @@
 # DVBetter (dvbetter)
 
-app with quasar and capacitor
+App for the dvb-network built with quasar and capacitor.
+Read more about developing with capacitor: https://quasar.dev/quasar-cli-vite/developing-capacitor-apps/preparation
 
 ## Install the dependencies
 ```bash
