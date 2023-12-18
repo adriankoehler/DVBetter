@@ -12,7 +12,9 @@ npm install
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
-quasar dev
+quasar dev #web
+quasar dev -m capacitor -T android #android
+
 ```
 
 
@@ -35,7 +37,8 @@ npm run format
 
 ### Build the app for production
 ```bash
-quasar build
+quasar build #web
+quasar build -m capacitor -T android #android
 ```
 
 ### Customize the configuration
