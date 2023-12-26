@@ -11,5 +11,8 @@
     "javascriptreact",
     "typescript",
     "vue"
+  ],
+  "cSpell.words": [
+    "axios"
   ]
 }
