@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-tabs align="justify">
-        <q-route-tab to="/stations" label="Stations" />
+        <q-route-tab :to="{ name: 'stations'}" label="Stations" />
         <q-route-tab to="/connections" label="Departures" />
       </q-tabs>
     </q-header>

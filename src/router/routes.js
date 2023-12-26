@@ -1,5 +1,6 @@
 const Connections = import('pages/ConnectionsPage.vue')
 const Stations = import('pages/StationsPage.vue')
+const StationDetail = import('pages/StationDetail.vue')
 
 const routes = [
   {
@@ -8,8 +9,20 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
       { path: 'connections', component: () => Connections },
-      { path: 'stations', component: () => Stations },
-      { path: 'stations/:stationId', component: () => Stations },
+      { path: 'stations/:stationId?',
+        children: [
+          {
+            path: '',
+            name: 'stations',
+            component: Stations,
+          },
+          {
+            path: ':stationId',
+            name: 'stationDetail',
+            component: StationDetail,
+          },
+        ],
+      }
     ]
   },
 
