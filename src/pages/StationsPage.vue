@@ -5,6 +5,7 @@
       <list-entry
         v-for="entry in ['Hauptbahnhof', 'Spenerstraße', 'Burgkstraße']"
         :name="entry"
+        stationId="33000028"
         :key="entry"
       />
 
@@ -12,6 +13,7 @@
       <list-entry
         v-for="entry in ['Hauptbahnhof', 'Spenerstraße', 'Burgkstraße', 'Pennricher Straße', 'Carolaplatz']"
         :name="entry"
+        stationId="33000028"
         :key="entry"
       />
     </div>
