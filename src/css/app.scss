@@ -1,4 +1,9 @@
 // app global css in SCSS form
+.q-page {
+    height: 1px; //min-height is set by quasar, but height-property is needed for grid/list-overflow to work
+    display: grid;
+}
+
 h1 {
     font-size: 2rem;
     line-height: 2rem;
