@@ -1,7 +1,7 @@
 <template>
   <q-page>
-    <h4>Station {{ stationId }}</h4>
-    <h5>Departures:</h5>
+    <h1>Station {{ stationId }}</h1>
+    <h2>Departures:</h2>
     <!-- TODO loading -->
     <div>{{ data }}</div>
   </q-page>

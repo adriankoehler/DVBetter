@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <h4>Connections</h4>
+    <h1>Connections</h1>
   </q-page>
 </template>
 
