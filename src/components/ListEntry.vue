@@ -1,6 +1,7 @@
 <template>
-  <div class="entry bg-grey-3 q-pa-md rounded-borders cursor-pointer" @click="$router.push('/stations/' + props.stationId)">
-    {{ props.name }}
+  <div class="entry bg-grey-3 q-pa-md rounded-borders cursor-pointer row" @click="$router.push('/stations/' + props.stationId)">
+    <span class="col-grow">{{ props.name }}</span>
+    <q-icon class="self-center" name="arrow_forward" />
   </div>
 </template>
 
