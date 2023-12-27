@@ -6,7 +6,7 @@
       </template>
     </q-input>
 
-    <q-btn color="primary" label="Find departures" />
+    <q-btn color="primary" label="Find departures" no-caps/>
   </div>
 </template>
 
