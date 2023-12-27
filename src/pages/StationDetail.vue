@@ -37,7 +37,6 @@ if (stationId) {
       .catch(() => {
         $q.notify({
           color: 'negative',
-          position: 'top-right',
           message: 'An error occurred fetching data from the VVO API',
           icon: 'report_problem'
         })
