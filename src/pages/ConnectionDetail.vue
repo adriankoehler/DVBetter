@@ -2,9 +2,15 @@
   <q-page>
     <h1>Connection from {{ stationIdOrigin }} to {{ stationIdDestination }}</h1>
     <h2>Connections:</h2>
-    <!-- TODO loading -->
     <div>{{ data }}</div>
   </q-page>
+
+  <q-inner-loading
+        :showing=loading
+        label="Fetching connections.."
+        label-style="font-size: 1.1em"
+        class="api_loading"
+  />
 </template>
 
 <script setup>
@@ -15,6 +21,7 @@ import { useQuasar } from 'quasar'
 
 const $q = useQuasar()
 const data = ref(null)
+const loading = ref(true)
 
 const route = useRoute()
 const connectionId = route.params.connectionId //f.e.: Hbf to Theaterplatz = "33000028-33000020"
@@ -47,8 +54,10 @@ if (connectionId) {
         })
       .then((response) => {
         data.value = response.data
+        loading.value = false
       })
       .catch(() => {
+        loading.value = false
         $q.notify({
           color: 'negative',
           message: 'An error occurred fetching data from the VVO API',
