@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-tabs align="justify" no-caps>
         <q-route-tab :to="{ name: 'stations'}" label="Stations" />
-        <q-route-tab to="/connections" label="Departures" />
+        <q-route-tab :to="{ name: 'connections'}" label="Connections" />
       </q-tabs>
     </q-header>
 

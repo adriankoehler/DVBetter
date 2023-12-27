@@ -18,7 +18,7 @@
       />
     </div>
 
-    <search-field/>
+    <search-field type="departures" />
   </q-page>
 </template>
 
