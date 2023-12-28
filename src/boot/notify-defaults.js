@@ -2,5 +2,5 @@ import { Notify } from 'quasar'
 
 Notify.setDefaults({
   position: 'top-right',
-  timeout: 2500
+  timeout: 4000 //4s
 })

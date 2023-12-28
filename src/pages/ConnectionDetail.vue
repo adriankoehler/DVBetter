@@ -2,7 +2,7 @@
   <q-page>
     <h1>Connection from {{ stationIdOrigin }} to {{ stationIdDestination }}</h1>
     <h2>Connections:</h2>
-    <div>{{ data }}</div>
+    <div>{{ connectionData }}</div>
   </q-page>
 
   <q-inner-loading
@@ -20,7 +20,9 @@ import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
 
 const $q = useQuasar()
-const data = ref(null)
+const connectionData = ref(null)
+const stationNameOrigin = ref("")
+const stationNameDestination = ref("")
 const loading = ref(true)
 
 const route = useRoute()
@@ -53,7 +55,23 @@ if (connectionId) {
             // time: "2023-12-08T21:36:42.775Z"
         })
       .then((response) => {
-        data.value = response.data
+        console.log(response.data)
+        if(response.data.Status.Code != "Ok"){
+          $q.notify({
+            color: 'negative',
+            message: 'An API error occurred',
+            caption: response.data.Status.Message,
+            icon: 'report_problem'
+          })
+        } else {
+          connectionData.value = response.data.Routes
+          // TODO get station names
+          // stationNameOrigin.value =
+          // stationNameDestination.value =
+
+          // TODO display connections
+          // Routes[{Duration, Interchanges, Price, MotChain: { Type(Footpath, Tram), Name(11, Fußweg), Direction?(Pennrich)} },..]
+        }
         loading.value = false
       })
       .catch(() => {

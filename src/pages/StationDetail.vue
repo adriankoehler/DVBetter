@@ -1,8 +1,8 @@
 <template>
   <q-page>
-    <h1>Station {{ stationId }}</h1>
-    <h2>Departures:</h2>
-    <div>{{ data }}</div>
+    <h2>{{ stationName }}</h2>
+    <h3>Departures:</h3>
+    <div>{{ departureData }}</div>
   </q-page>
 
   <q-inner-loading
@@ -20,8 +20,9 @@ import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
 
 const $q = useQuasar()
-const data = ref(null)
 const loading = ref(true)
+const departureData = ref(null)
+const stationName = ref("")
 
 const route = useRoute()
 const stationId = route.params.stationId //f.e.: Hbf=33000028
@@ -39,7 +40,20 @@ if (stationId) {
           ]
         })
       .then((response) => {
-        data.value = response.data
+        console.log(response.data)
+        if(response.data.Status.Code != "Ok"){
+          $q.notify({
+            color: 'negative',
+            message: 'An API error occurred',
+            caption: response.data.Status.Message,
+            icon: 'report_problem'
+          })
+        } else {
+          departureData.value = response.data.Departures
+          stationName.value = response.data.Name
+
+          // TODO display departures
+        }
         loading.value = false
       })
       .catch(() => {
