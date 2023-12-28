@@ -8,7 +8,6 @@
   <q-inner-loading
         :showing=loading
         label="Fetching departures.."
-        label-style="font-size: 1.1em"
         class="api_loading"
   />
 </template>

@@ -31,4 +31,8 @@ h4 {
 
 .api_loading {
     background-color: rgba(255, 255, 255, 0.85);
+
+    .q-inner-loading__label {
+        font-size: 1.1em;
+    }
 }
