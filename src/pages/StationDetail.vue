@@ -1,10 +1,12 @@
 <template>
   <q-page>
     <div class="content-wrapper">
-    <h2>{{ stationName }}</h2>
-    <h3>Departures:</h3>
-    <div>{{ departureData }}</div>
+      <h2>{{ stationName }}</h2>
+      <h3>Departures:</h3>
+      <div>{{ departureData }}</div>
     </div>
+
+    <expandable-map />
   </q-page>
 
   <q-inner-loading
@@ -19,6 +21,7 @@ import { ref } from 'vue'
 import { useRoute } from "vue-router"
 import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
+import ExpandableMap from 'src/components/ExpandableMap.vue'
 
 const $q = useQuasar()
 const loading = ref(true)
