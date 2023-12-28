@@ -1,8 +1,10 @@
 <template>
   <q-page>
-    <h1>Connection from {{ stationIdOrigin }} to {{ stationIdDestination }}</h1>
-    <h2>Connections:</h2>
-    <div>{{ connectionData }}</div>
+    <div class="content-wrapper">
+      <h1>Connection from {{ stationIdOrigin }} to {{ stationIdDestination }}</h1>
+      <h2>Connections:</h2>
+      <div>{{ connectionData }}</div>
+    </div>
   </q-page>
 
   <q-inner-loading

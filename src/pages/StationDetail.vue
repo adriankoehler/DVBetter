@@ -1,8 +1,10 @@
 <template>
   <q-page>
+    <div class="content-wrapper">
     <h2>{{ stationName }}</h2>
     <h3>Departures:</h3>
     <div>{{ departureData }}</div>
+    </div>
   </q-page>
 
   <q-inner-loading

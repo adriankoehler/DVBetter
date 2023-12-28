@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="list hide-scrollbar">
+    <div class="content-wrapper list hide-scrollbar">
       <h2>Bookmarks</h2>
       <list-entry
         v-for="entry in [['Hauptbahnhof', 'Theaterplatz'], ['Spenerstraße', 'Burgkstraße']]"
