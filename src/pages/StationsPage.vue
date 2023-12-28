@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import SearchField from 'src/components/SearchField.vue'
+import SearchField from 'components/SearchField.vue'
 import ListEntry from 'components/ListEntry.vue'
 </script>
 
