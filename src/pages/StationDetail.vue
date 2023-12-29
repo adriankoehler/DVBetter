@@ -2,8 +2,7 @@
   <q-page>
     <div class="content-wrapper">
       <h2>{{ stationName }}</h2>
-      <h3>Departures:</h3>
-      <div>{{ departureData }}</div>
+      <departure-entry v-for="departureEntry in departureData" :departure="departureEntry" :key="departureEntry.Id" />
     </div>
 
     <expandable-map />
@@ -21,7 +20,8 @@ import { ref } from 'vue'
 import { useRoute } from "vue-router"
 import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
-import ExpandableMap from 'src/components/ExpandableMap.vue'
+import DepartureEntry from 'components/DepartureEntry.vue'
+import ExpandableMap from 'components/ExpandableMap.vue'
 
 const $q = useQuasar()
 const loading = ref(true)
@@ -34,7 +34,7 @@ const stationId = route.params.stationId //f.e.: Hbf=33000028
 if (stationId) {
   api.post('/dm', {
           stopid: stationId,
-          limit: 5,
+          limit: 10,
           mot: [
             "Tram",
             "CityBus",
