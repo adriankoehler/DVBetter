@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="content-wrapper list hide-scrollbar">
+    <div class="content-wrapper hide-scrollbar">
       <h2>Bookmarks</h2>
       <list-entry
         v-for="entry in ['Hauptbahnhof', 'Spenerstraße', 'Burgkstraße']"
@@ -26,9 +26,3 @@
 import SearchField from 'components/SearchField.vue'
 import ListEntry from 'components/ListEntry.vue'
 </script>
-
-<style lang="scss">
-.list {
-  overflow-y: auto; //the search field should take all the place it needs, while the list overflows if needed
-}
-</style>

@@ -39,4 +39,5 @@ h4 {
 
 .content-wrapper {
     padding: 0 2em;
+    overflow-y: auto; //the search field should take all the place it needs, while the main content of the page overflows if needed
 }
