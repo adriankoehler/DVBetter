@@ -1,16 +1,20 @@
 export const dateFunctions = {
     // somewhat hacky way of deciphering the date string returned in the VVO API via regex capture groups and turn it into a date object
     convertVVOToDate: (VVOTimestamp) => {
+        if (!VVOTimestamp) {
+          console.log("Error: VVO timestamp was invalid")
+          return false
+        }
+
         const regexp = /\/Date\((\d+)([+-]\d+)\)\//g
         const matches = [...VVOTimestamp.matchAll(regexp)]
 
         let unixTimestamp = parseInt(matches[0][1]) // first match is raw unix timestamp
-        if (matches[0][2] == "+0100") {             // second match is summertime modifier (3600s=1h)
+        if (matches[0][2] === "+0100") {             // second match is summertime modifier (3600s=1h)
           unixTimestamp += 3600000
         }
 
-        const arrivalDate = new Date(unixTimestamp);
-        return arrivalDate
+      return new Date(unixTimestamp)
     },
 
     // returns the hours/minutes until the next departure as a string (f.e. "1h 5min")
