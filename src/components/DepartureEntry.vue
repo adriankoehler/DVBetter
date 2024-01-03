@@ -3,8 +3,8 @@
     <!-- possible icons: directions_bus,tram,train -->
     <!-- <span class="col-1"><q-icon class="self-center" name="tram" /></span> -->
 
-    <span class="col-1"><b>{{ line }}</b></span>
-    <span class="col-8">{{ direction }}</span>
+    <span class="col-2"><b>{{ line }}</b></span>
+    <span class="col-7">{{ direction }}</span>
     <!-- TODO could be expansion item with additional information (delays, reroutes, free seats)-->
     <span class="col-3 text-right">{{ arrivalTimeString }}</span>
   </div>
@@ -15,6 +15,7 @@ const props = defineProps(['departure'])
 import { dateFunctions } from 'stores/helperFunctions.js'
 
 // (todo) could be possible to periodically update the table with out manually triggering it
+// with props.departure.Id + props.departure.ScheduledTime
 
 const line = props.departure.LineName
 const direction = props.departure.Direction
