@@ -1,7 +1,7 @@
 <template>
   <q-page>
-    <div class="content-wrapper">
-      <h2>{{ stationName }}</h2>
+    <div class="content-wrapper no-x-padding">
+      <h2 class="q-px-std">{{ stationName }}</h2>
       <departure-entry v-for="departureEntry in departureData" :departure="departureEntry" :key="departureEntry.Id" />
     </div>
 
@@ -14,6 +14,14 @@
         class="api_loading"
   />
 </template>
+
+<style lang="scss">
+.no-x-padding {
+  // overwrite padding of '.content-wrapper'
+  padding-left: 0;
+  padding-right: 0;
+}
+</style>
 
 <script setup>
 import { ref } from 'vue'

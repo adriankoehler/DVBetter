@@ -1,13 +1,16 @@
 <template>
-  <div class="row q-py-sm">
-    <!-- possible icons: directions_bus,tram,train -->
-    <!-- <span class="col-1"><q-icon class="self-center" name="tram" /></span> -->
+  <q-expansion-item header-class="departure-entry" expand-icon-class="expand-departure-icon">
+    <template v-slot:header>
+      <!-- icons for mode of transportation possible : directions_bus,tram,train -->
+      <q-item-section avatar> {{ line }}              </q-item-section>
+      <q-item-section>        {{ direction }}         </q-item-section>
+      <q-item-section side>   {{ arrivalTimeString }} </q-item-section>
+    </template>
 
-    <span class="col-2"><b>{{ line }}</b></span>
-    <span class="col-7">{{ direction }}</span>
-    <!-- TODO could be expansion item with additional information (delays, reroutes, free seats)-->
-    <span class="col-3 text-right">{{ arrivalTimeString }}</span>
-  </div>
+    <q-card class="q-px-std">
+      (some additional info)
+    </q-card>
+  </q-expansion-item>
 </template>
 
 <script setup>
@@ -21,15 +24,33 @@ const line = props.departure.LineName
 const direction = props.departure.Direction
 const arrivalDateScheduled = dateFunctions.convertVVOToDate(props.departure.ScheduledTime)
 const arrivalDateReal = dateFunctions.convertVVOToDate(props.departure.RealTime)
-// console.log(arrivalDateScheduled, arrivalDateReal)
 
 // since the Realtime date is not always available, get the scheduled time if necessary
 const arrivalTimeString = dateFunctions.getArrivalTimeString(arrivalDateReal ? arrivalDateReal : arrivalDateScheduled)
 </script>
 
 <style lang="scss">
-.entry {
-  margin-bottom: 0.6rem;
-  width: 100%;
+.departure-entry {
+  padding-left: $main-content-padding;
+  padding-right: $main-content-padding;
+
+  .q-item__section--avatar {
+    font-weight: bold;
+  }
+
+  .q-item__section--side {
+    color: inherit;
+  }
+
+  .expand-departure-icon {
+    color: $secondary;
+  }
+
+  // TODO
+  &.selected {
+    background: #DDA856;
+    color: white;
+    // wenn ausgeklappt noch opacity dazu
+  }
 }
 </style>
