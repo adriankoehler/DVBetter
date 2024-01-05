@@ -38,6 +38,12 @@ h4 {
 }
 
 .content-wrapper {
-    padding: 0 2em;
+    padding: 0 $main-content-padding;
     overflow-y: auto; //the search field should take all the place it needs, while the main content of the page overflows if needed
+}
+
+// generic class to apply the "standard" main content padding
+.q-px-std {
+    padding-left: $main-content-padding;
+    padding-right: $main-content-padding;
 }

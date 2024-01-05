@@ -55,7 +55,7 @@ onMounted(()=> {
     width: 100%;
 
     .q-item {
-        padding: 0 2em;
+        padding: 0 $main-content-padding;
     }
 }
 

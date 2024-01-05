@@ -22,7 +22,7 @@ const searchText2 = ref("")
 
 <style lang="scss">
 .search-field {
-  padding: 2em;
+  padding: $main-content-padding;
   width: 100%;
 
   background-color: $dark;
