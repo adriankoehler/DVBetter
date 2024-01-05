@@ -5,16 +5,18 @@
 // Your own variables (that are declared here) and Quasar's own
 // ones will be available out of the box in your .vue/.scss/.sass files
 
-$primary   : #4E55FF;
-$secondary : #cccccc;
-$accent    : #1f3d8f;
+$primary        : #4e54ff;
+$primary-10     : #4e54ff20;
+$primary-05     : #4e54ff10;
+$secondary      : #cccccc;
+$accent         : #1f3d8f;
 
-$dark      : #292929;
-$dark-page : #121212;
+$dark           : #292929;
+$dark-page      : #121212;
 
-$positive  : #1ea871;
-$negative  : #c20030;
-$info      : #abcadb;
-$warning   : #F2C037;
+$positive       : #1ea871;
+$negative       : #c20030;
+$info           : #abcadb;
+$warning        : #F2C037;
 
 $main-content-padding : 1.8rem;

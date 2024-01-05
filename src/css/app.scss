@@ -42,8 +42,15 @@ h4 {
     overflow-y: auto; //the search field should take all the place it needs, while the main content of the page overflows if needed
 }
 
-// generic class to apply the "standard" main content padding
+// generic classes to apply the "standard" main content padding
 .q-px-std {
     padding-left: $main-content-padding;
     padding-right: $main-content-padding;
+}
+.q-py-std {
+    padding-top: $main-content-padding;
+    padding-bottom: $main-content-padding;
+}
+.q-pa-std {
+    padding: $main-content-padding;
 }
