@@ -5,7 +5,7 @@
       <departure-entry v-for="departureEntry in departureData" :departure="departureEntry" :key="departureEntry.Id" />
     </div>
 
-    <expandable-map />
+    <expandable-map :station="stationName"/>
   </q-page>
 
   <q-inner-loading
@@ -63,8 +63,6 @@ if (stationId) {
         } else {
           departureData.value = response.data.Departures
           stationName.value = response.data.Name
-
-          // TODO display departures
         }
         loading.value = false
       })

@@ -13,11 +13,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import "leaflet/dist/leaflet.css";
+import { ref, onMounted, watch } from 'vue';
+import 'leaflet/dist/leaflet.css';
 import * as L from 'leaflet';
+import stationsJson from 'assets/stations_dresden.json'
 
-// TODO dark background/white icons+text?, add icons
+const props = defineProps(['station'])
+
+// dark background/white icons+text?, add icons
 
 const initialMap = ref(null);
 const mapOptions = { zoomControl: false, zoom:1, zoomAnimation:false, fadeAnimation:true, markerZoomAnimation:true }
@@ -34,7 +37,8 @@ const initialCenter = [51.05090121, 13.73357] // Postplatz
 // });
 
 function reloadMap() {
-    console.log(initialMap.value.invalidateSize())
+    // map has to be reloaded when expanded, otherwise leaflet thinks its still small (doesn't load properly)
+    initialMap.value.invalidateSize()
 }
 
 onMounted(()=> {
@@ -47,6 +51,21 @@ onMounted(()=> {
     // L.marker([24.3746, 88.6004], {icon: myIcon}).addTo(initialMap.value);
 });
 
+watch(()=> props.station, (newVal)=> {
+    // since the station name is not immediately available (wait for API call in StationDetail component),
+    // we have to watch for a props.station change and then update the map to show the station
+
+    const stationData = stationsJson.features.filter(d => d.properties.name == newVal)
+    if (stationData.length > 1) {
+        console.log("multiple stations found for name, take first one", stationData[0])
+    }
+
+    let lonCoordinate = stationData[0].geometry.coordinates[0]
+    let latCoordinate = stationData[0].geometry.coordinates[1]
+
+    const newCoordinates = [latCoordinate, lonCoordinate]
+    initialMap.value.setView(newCoordinates)
+})
 
 </script>
 
