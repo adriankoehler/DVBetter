@@ -44,7 +44,7 @@ const arrivalTimeString = dateFunctions.getArrivalTimeString(arrivalDateReal ? a
 
   .q-item__section--avatar {
     font-weight: bold;
-    min-width: 45px;
+    width: 45px;
   }
 
   .q-item__section--side {
