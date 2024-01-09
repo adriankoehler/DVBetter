@@ -43,6 +43,18 @@ h4 {
 }
 
 // generic classes to apply the "standard" main content padding
+.q-pl-std {
+    padding-left: $main-content-padding;
+}
+.q-pr-std {
+    padding-right: $main-content-padding;
+}
+.q-pt-std {
+    padding-top: $main-content-padding;
+}
+.q-pb-std {
+    padding-bottom: $main-content-padding;
+}
 .q-px-std {
     padding-left: $main-content-padding;
     padding-right: $main-content-padding;
