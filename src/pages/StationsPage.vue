@@ -4,7 +4,8 @@
       <h2>Bookmarks</h2>
       <list-entry
         v-for="entry in bookmarkedStations"
-        :name="entry.name + ' (' + entry.abbreviation + ')'"
+        :name="entry.name"
+        :abbreviation="entry.abbreviation"
         :stationId="entry.id"
         :key="entry.id"
       />
