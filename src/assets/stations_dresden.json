@@ -11,7 +11,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000001",
         "abbreviation": "MIT"
       },
       "geometry": {
@@ -32,7 +32,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000003",
         "abbreviation": "PRA"
       },
       "geometry": {
@@ -53,8 +53,8 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
-        "abbreviation": "ALT"
+        "id": "33000004",
+        "abbreviation": "AMT"
       },
       "geometry": {
         "type": "Point",
@@ -74,7 +74,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000005",
         "abbreviation": "PIR"
       },
       "geometry": {
@@ -95,7 +95,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000006",
         "abbreviation": "HYG"
       },
       "geometry": {
@@ -116,7 +116,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000007",
         "abbreviation": "STR"
       },
       "geometry": {
@@ -131,14 +131,14 @@
       "type": "Feature",
       "properties": {
         "number": "de:14612:8",
-        "nameWithCity": "Dresden Gro\u00c3\u0178er Garten",
-        "name": "Gro\u00c3\u0178er Garten",
+        "nameWithCity": "Dresden Georg-Arnhold-Bad",
+        "name": "Georg-Arnhold-Bad",
         "city": "Dresden",
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
-        "abbreviation": "GRO"
+        "id": "33000008",
+        "abbreviation": "GAB"
       },
       "geometry": {
         "type": "Point",
@@ -158,7 +158,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000009",
         "abbreviation": "DS"
       },
       "geometry": {
@@ -179,7 +179,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000010",
         "abbreviation": "SA"
       },
       "geometry": {
@@ -200,7 +200,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000011",
         "abbreviation": "RLP"
       },
       "geometry": {
@@ -221,7 +221,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000012",
         "abbreviation": "ROT"
       },
       "geometry": {
@@ -242,7 +242,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000013",
         "abbreviation": "ALB"
       },
       "geometry": {
@@ -263,7 +263,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000014",
         "abbreviation": "CAR"
       },
       "geometry": {
@@ -284,7 +284,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000015",
         "abbreviation": "SYN"
       },
       "geometry": {
@@ -305,7 +305,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000016",
         "abbreviation": "NEU"
       },
       "geometry": {
@@ -326,7 +326,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000017",
         "abbreviation": "ANT"
       },
       "geometry": {
@@ -347,7 +347,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000018",
         "abbreviation": "PAL"
       },
       "geometry": {
@@ -368,7 +368,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000019",
         "abbreviation": "NMA"
       },
       "geometry": {
@@ -389,8 +389,8 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
-        "abbreviation": "THE"
+        "id": "33000020",
+        "abbreviation": "THEA"
       },
       "geometry": {
         "type": "Point",
@@ -410,7 +410,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000021",
         "abbreviation": "KON"
       },
       "geometry": {
@@ -431,7 +431,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000022",
         "abbreviation": "MAX"
       },
       "geometry": {
@@ -452,7 +452,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000023",
         "abbreviation": "SWR"
       },
       "geometry": {
@@ -473,7 +473,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000025",
         "abbreviation": "FRE"
       },
       "geometry": {
@@ -579,7 +579,7 @@
         "tariffZone2": "",
         "tariffZone3": "",
         "id": "1234",
-        "abbreviation": "GRE"
+        "abbreviation": "GRET"
       },
       "geometry": {
         "type": "Point",
@@ -600,7 +600,7 @@
         "tariffZone2": "",
         "tariffZone3": "",
         "id": "1234",
-        "abbreviation": "HBN"
+        "abbreviation": "HBFN"
       },
       "geometry": {
         "type": "Point",
@@ -704,7 +704,7 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "1234",
+        "id": "33000037",
         "abbreviation": "POS"
       },
       "geometry": {
@@ -810,7 +810,7 @@
         "tariffZone2": "",
         "tariffZone3": "",
         "id": "1234",
-        "abbreviation": "GAB"
+        "abbreviation": "GBS"
       },
       "geometry": {
         "type": "Point",
@@ -2028,7 +2028,7 @@
         "tariffZone2": "",
         "tariffZone3": "",
         "id": "1234",
-        "abbreviation": "WAS"
+        "abbreviation": "WASA"
       },
       "geometry": {
         "type": "Point",
@@ -2322,7 +2322,7 @@
         "tariffZone2": "",
         "tariffZone3": "",
         "id": "1234",
-        "abbreviation": "NOABR"
+        "abbreviation": "RBS"
       },
       "geometry": {
         "type": "Point",
@@ -2385,7 +2385,7 @@
         "tariffZone2": "",
         "tariffZone3": "",
         "id": "1234",
-        "abbreviation": "NOABR"
+        "abbreviation": "MPL"
       },
       "geometry": {
         "type": "Point",
@@ -6921,7 +6921,7 @@
         "tariffZone2": "",
         "tariffZone3": "",
         "id": "1234",
-        "abbreviation": "NOABR"
+        "abbreviation": "SGUT"
       },
       "geometry": {
         "type": "Point",
@@ -6942,7 +6942,7 @@
         "tariffZone2": "",
         "tariffZone3": "",
         "id": "1234",
-        "abbreviation": "NOABR"
+        "abbreviation": "REG"
       },
       "geometry": {
         "type": "Point",
@@ -10386,7 +10386,7 @@
         "tariffZone2": "",
         "tariffZone3": "",
         "id": "1234",
-        "abbreviation": "NOABR"
+        "abbreviation": "TUD"
       },
       "geometry": {
         "type": "Point",
@@ -10680,7 +10680,7 @@
         "tariffZone2": "",
         "tariffZone3": "",
         "id": "1234",
-        "abbreviation": "NOABR"
+        "abbreviation": "HELM"
       },
       "geometry": {
         "type": "Point",
