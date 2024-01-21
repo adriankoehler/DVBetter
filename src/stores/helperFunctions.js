@@ -79,5 +79,27 @@ export const settingsFunctions = {
       })
       return true
     }
+  },
+
+  // iterates through all stations in the preferences and returns an array of all station-IDs that are currently bookmarked (value: true)
+  getBookmarkedStations: async () => {
+    let stations = await Preferences.keys()
+    stations = stations.keys.filter(key => key.match(/\d{8}/))
+
+    let bookmarkedStations = []
+    for (const stationId of stations) {
+      let station = await Preferences.get({ key: stationId })
+      if(JSON.parse(station.value)){
+        bookmarkedStations.push(stationId)
+      }
+    }
+
+    return bookmarkedStations
+  },
+
+  // TODO wie oben
+  getBookmarkedConnections: async () => {
+    let stations = await Preferences.keys()
+    return stations.keys.filter(key => key.match(/\d{8}-\d{8}/))
   }
 }

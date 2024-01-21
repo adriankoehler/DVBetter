@@ -36,8 +36,6 @@ import { settingsFunctions } from 'stores/helperFunctions.js'
 import DepartureEntry from 'components/DepartureEntry.vue'
 import ExpandableMap from 'components/ExpandableMap.vue'
 
-import { Preferences } from '@capacitor/preferences';
-
 const $q = useQuasar()
 const loading = ref(true)
 const departureData = ref(null)
