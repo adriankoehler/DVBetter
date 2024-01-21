@@ -1,3 +1,5 @@
+import { Preferences } from '@capacitor/preferences';
+
 export const dateFunctions = {
     // somewhat hacky way of deciphering the date string returned in the VVO API via regex capture groups and turn it into a date object
     convertVVOToDate: (VVOTimestamp) => {
@@ -31,4 +33,51 @@ export const dateFunctions = {
           return hh + "h " + mm + "min"
         }
     }
+}
+
+export const settingsFunctions = {
+  // checks wether a station or connection is bookmarked
+  // if the station/connection was not yet bookmarked (and the value for the key is null, the function returns false)
+  isBookmarked: async(bookmarkId) => {
+    if (bookmarkId) {
+      // station
+      const ret = await Preferences.get({ key: bookmarkId })
+      const isBookmarked = JSON.parse(ret.value) ?? false
+
+      return isBookmarked ?? false
+    } else {
+      throw new Error("Error checking bookmarks for station/connection (missing parameters)")
+    }
+  },
+
+  // sets/removes a bookmark via preferences API
+  // station bookmarks are saved by their station-ID (i.e. "123" as the preferences key)
+  // connection bookmarks are saved with both station-IDs separated by a hyphen (i.e. "123-124" as the preferences key)
+  // if the value of the key is true, the station/connection is currently bookmarked
+  // returns true/false depending on the new bookmark state (f.e. true if the station is now bookmarked, when it previously wasn't)
+  bookmark: async(stationId1, stationId2) => {
+    let bookmarkId
+    if (!stationId2) {
+      // station
+      bookmarkId = stationId1
+    } else {
+      // connection
+      bookmarkId = stationId1 + "-" + stationId2
+    }
+    // ggf.  throw new Error("Error bookmarking station/connection (missing parameters)")
+
+    if (await settingsFunctions.isBookmarked(bookmarkId)) {
+      await Preferences.set({
+        key: bookmarkId,
+        value: JSON.stringify(false)
+      })
+      return false
+    } else {
+      await Preferences.set({
+        key: bookmarkId,
+        value: JSON.stringify(true)
+      })
+      return true
+    }
+  }
 }
