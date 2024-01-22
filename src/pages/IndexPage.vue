@@ -8,10 +8,9 @@
   </q-page>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
+import { useRouter } from "vue-router"
 
-export default defineComponent({
-  name: 'IndexPage'
-})
+//TODO could be a user setting
+useRouter().push({ path: '/stations' })
 </script>
