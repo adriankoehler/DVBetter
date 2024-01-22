@@ -26,6 +26,7 @@ const initialMap = ref(null);
 const mapOptions = { zoomControl: false, zoom:1, zoomAnimation:false, fadeAnimation:true, markerZoomAnimation:true }
 const initialCenter = [51.05090121, 13.73357] // Postplatz
 
+// TODO get the locations of all platforms for the station and set icons accordingly
 // const myIcon = L.icon({
 //     iconUrl: "iconadress",
 //     iconSize: [30, 30],
@@ -57,7 +58,11 @@ watch(()=> props.station, (newVal)=> {
 
     const stationData = stationsJson.features.filter(d => d.properties.name == newVal)
     if (stationData.length > 1) {
-        console.log("multiple stations found for name, take first one", stationData[0])
+      console.log("multiple stations found for name, take first one", stationData[0])
+    } else if (stationData.length < 1) {
+      console.log("no geo data found for this station, map will only display default location")
+      // TODO display grey overlay on map with error.. or get the geo data elsewhere (f.e. API pointfinder + convert GK4 coordinates)
+      return
     }
 
     let lonCoordinate = stationData[0].geometry.coordinates[0]
