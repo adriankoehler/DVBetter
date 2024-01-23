@@ -38,7 +38,7 @@ import { dateFunctions } from 'stores/helperFunctions.js'
 
 const line = props.departure.LineName
 const direction = props.departure.Direction
-const mot = props.departure.Mot //Tram, CityBus, IntercityBus, SuburbanRailway, Train, ("Undefined")
+const mot = props.departure.Mot //Tram, CityBus, IntercityBus, SuburbanRailway, Train, +PlusBus ("Undefined")
 const delayed = props.departure.State == "Delayed" //daran vlt uhrzeitberechnung +-
 const rerouted = props.departure.RouteChanges.length != 0 //icon: alt_route, turn_sharp_left
 const cancelled = props.departure.CancelReasons.length != 0 //icon: cancel
