@@ -41,7 +41,7 @@
       </template>
 
       <template v-slot:append>
-        <q-btn flat round color="primary" icon="my_location" @click="console.log('get location')"/>
+        <q-btn flat round color="primary" icon="my_location" @click="getPosition()"/>
       </template>
     </q-select>
 
@@ -56,7 +56,7 @@
 import { ref } from 'vue'
 import { useRouter } from "vue-router"
 import { useQuasar } from "quasar";
-
+import { Geolocation } from '@capacitor/geolocation';
 import { api } from "boot/axios";
 
 const $q = useQuasar()
@@ -66,6 +66,12 @@ const props = defineProps(['type'])
 const searchText = ref()
 const searchText2 = ref()
 const options = ref([])
+
+async function getPosition() {
+  const coordinates = await Geolocation.getCurrentPosition();
+
+  console.log('Current position:', coordinates);
+}
 
 function findDepartures() {
   router.push(`/stations/${searchText.value.id}`)

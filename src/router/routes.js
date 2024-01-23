@@ -15,12 +15,12 @@ const routes = [
           {
             path: '',
             name: 'connections',
-            component: () => Connections,
+            component: Connections,
           },
           {
             path: ':connectionId',
             name: 'connectionDetail',
-            component: () => ConnectionDetail,
+            component: ConnectionDetail,
           },
         ],
       },
@@ -29,12 +29,12 @@ const routes = [
           {
             path: '',
             name: 'stations',
-            component: () => Stations,
+            component: Stations,
           },
           {
             path: ':stationId',
             name: 'stationDetail',
-            component: () => StationDetail,
+            component: StationDetail,
           },
         ],
       }
