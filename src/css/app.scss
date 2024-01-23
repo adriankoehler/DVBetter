@@ -29,6 +29,14 @@ h4 {
     font-weight: 400;
 }
 
+// set the margin a little smaller than the quasar default
+.on-right {
+    margin-left: 8px
+}
+.on-left {
+    margin-right: 8px
+}
+
 .api_loading {
     background-color: rgba(255, 255, 255, 0.95);
 
