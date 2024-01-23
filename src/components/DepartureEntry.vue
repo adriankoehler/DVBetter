@@ -16,7 +16,7 @@
       <q-item-section avatar>
         <q-icon v-if="mot == 'Tram'" name="tram" size="xs"/>
         <q-icon v-if="mot == 'CityBus'" name="directions_bus" size="xs"/>
-        <q-icon v-if="mot == 'IntercityBus'" name="directions_bus_filled" size="xs"/>
+        <q-icon v-if="mot == 'IntercityBus' || mot == 'PlusBus'" name="directions_bus_filled" size="xs"/>
         <q-icon v-if="mot == 'SuburbanRailway'" name="directions_railway" size="xs"/>
         <q-icon v-if="mot == 'Train'" name="directions_railway_filled" size="xs"/>
       </q-item-section>
