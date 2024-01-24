@@ -1,3 +1,5 @@
+import { pushToSearchHistory } from "src/stores/search_history";
+
 const Connections = import("pages/ConnectionsPage.vue");
 const ConnectionDetail = import("pages/ConnectionDetail.vue");
 const Stations = import("pages/StationsPage.vue");
@@ -37,6 +39,7 @@ const routes = [
             path: ":stationId",
             name: "stationDetail",
             component: StationDetail,
+            beforeEnter: logSearchHistory,
           },
         ],
       },
@@ -50,5 +53,10 @@ const routes = [
     component: () => import("pages/ErrorNotFound.vue"),
   },
 ];
+
+async function logSearchHistory(to, _from) {
+  const stationId = to.params.stationId;
+  await pushToSearchHistory(stationId);
+}
 
 export default routes;
