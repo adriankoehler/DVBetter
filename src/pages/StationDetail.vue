@@ -4,7 +4,13 @@
       <q-pull-to-refresh @refresh="refresh">
         <div class="row">
           <h2 class="q-pl-std">{{ stationName }}</h2>
-          <q-icon id="bookmark-station-icon" class="self-center cursor-pointer q-ml-auto q-pr-std" :name="icon" size="sm" @click="bookmark()"/>
+          <q-icon
+            id="bookmark-station-icon"
+            class="self-center cursor-pointer q-ml-auto q-pr-std"
+            :name="icon"
+            size="sm"
+            @click="bookmark()"
+          />
         </div>
         <departure-entry
           v-for="departureEntry in departureData"
@@ -15,13 +21,13 @@
       </q-pull-to-refresh>
     </div>
 
-    <expandable-map :station="stationName"/>
+    <expandable-map :station="stationName" />
   </q-page>
 
   <q-inner-loading
-        :showing=loading
-        label="Fetching departures.."
-        class="api_loading"
+    :showing="loading"
+    label="Fetching departures.."
+    class="api_loading"
   />
 </template>
 
@@ -34,19 +40,19 @@
 </style>
 
 <script setup>
-import { ref } from 'vue'
-import { useRoute } from "vue-router"
-import { api } from 'boot/axios'
-import { useQuasar } from 'quasar'
-import { settingsFunctions } from 'stores/helperFunctions.js'
-import DepartureEntry from 'components/DepartureEntry.vue'
-import ExpandableMap from 'components/ExpandableMap.vue'
+import { ref } from "vue";
+import { useRoute } from "vue-router";
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
+import { settingsFunctions } from "stores/helperFunctions.js";
+import DepartureEntry from "components/DepartureEntry.vue";
+import ExpandableMap from "components/ExpandableMap.vue";
 
-const $q = useQuasar()
-const loading = ref(true)
-const departureData = ref(null)
-const stationName = ref("")
-const icon = ref("bookmark_border")
+const $q = useQuasar();
+const loading = ref(true);
+const departureData = ref(null);
+const stationName = ref("");
+const icon = ref("bookmark_border");
 let forceRefreshId = 0; //increased in refresh(); lets the component know that it should be reloaded (to update/recalculate the relative departure times)
 
 // offline testing
@@ -54,62 +60,57 @@ let forceRefreshId = 0; //increased in refresh(); lets the component know that i
 // stationName.value = "Wörgl"
 // loading.value = false
 
-const route = useRoute()
-const stationId = route.params.stationId //f.e.: Hbf=33000028
+const route = useRoute();
+const stationId = route.params.stationId; //f.e.: Hbf=33000028
 
 function refresh(done) {
-  forceRefreshId++
-  fetchDepartures()
-  done()
+  forceRefreshId++;
+  fetchDepartures();
+  done();
 }
 
 function fetchDepartures() {
-  api.post('/dm', {
-          stopid: stationId,
-          limit: 10,
-          mot: [
-            "Tram",
-            "CityBus",
-            "IntercityBus",
-            "SuburbanRailway",
-            "Train"
-          ]
-        })
-      .then((response) => {
-        console.log(response.data)
-        if(response.data.Status.Code != "Ok"){
-          $q.notify({
-            color: 'negative',
-            message: 'An API error occurred',
-            caption: response.data.Status.Message,
-            icon: 'report_problem'
-          })
-        } else {
-          departureData.value = response.data.Departures
-          stationName.value = response.data.Name
-        }
-        loading.value = false
-      })
-      .catch(() => {
-        loading.value = false
+  api
+    .post("/dm", {
+      stopid: stationId,
+      limit: 10,
+      mot: ["Tram", "CityBus", "IntercityBus", "SuburbanRailway", "Train"],
+    })
+    .then((response) => {
+      console.log(response.data);
+      if (response.data.Status.Code != "Ok") {
         $q.notify({
-          color: 'negative',
-          message: 'An error occurred fetching data from the VVO API',
-          icon: 'report_problem'
-        })
-      })
+          color: "negative",
+          message: "An API error occurred",
+          caption: response.data.Status.Message,
+          icon: "report_problem",
+        });
+      } else {
+        departureData.value = response.data.Departures;
+        stationName.value = response.data.Name;
+      }
+      loading.value = false;
+    })
+    .catch(() => {
+      loading.value = false;
+      $q.notify({
+        color: "negative",
+        message: "An error occurred fetching data from the VVO API",
+        icon: "report_problem",
+      });
+    });
 }
 
 if (stationId) {
-  settingsFunctions.isBookmarked(stationId).then(response => {
-    icon.value = response ? "bookmark" : "bookmark_border"
-  })
+  settingsFunctions.isBookmarked(stationId).then((response) => {
+    icon.value = response ? "bookmark" : "bookmark_border";
+  });
 
-  fetchDepartures()
+  fetchDepartures();
 }
 
 async function bookmark() {
-  const isBookmarked = await settingsFunctions.bookmark(stationId)
-  icon.value = isBookmarked ? "bookmark" : "bookmark_border"
+  const isBookmarked = await settingsFunctions.bookmark(stationId);
+  icon.value = isBookmarked ? "bookmark" : "bookmark_border";
 }
 </script>

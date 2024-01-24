@@ -9,21 +9,21 @@
 </template>
 
 <script setup>
-import { Preferences } from '@capacitor/preferences';
+import { Preferences } from "@capacitor/preferences";
 
 async function setObject() {
   await Preferences.set({
-    key: 'user',
+    key: "user",
     value: JSON.stringify({
       id: 1,
-      name: 'Joseph'
-    })
-  })
+      name: "Joseph",
+    }),
+  });
 }
 
 async function getObject() {
-  const ret = await Preferences.get({ key: 'user' })
-  const user = JSON.parse(ret.value)
-  console.log(user)
+  const ret = await Preferences.get({ key: "user" });
+  const user = JSON.parse(ret.value);
+  console.log(user);
 }
 </script>

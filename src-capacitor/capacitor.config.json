@@ -1,9 +1,9 @@
 {
-  "appId": "org.capacitor.quasar.app",
+  "appId": "com.dvbetter.app",
   "appName": "DVBetter",
   "webDir": "www",
   "server": {
     "androidScheme": "https",
-    "url": "http://169.254.123.162:9500"
+    "url": "http://172.16.100.151:9500"
   }
 }

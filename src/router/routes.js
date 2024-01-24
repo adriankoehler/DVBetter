@@ -1,52 +1,54 @@
-const Connections = import('pages/ConnectionsPage.vue')
-const ConnectionDetail = import('pages/ConnectionDetail.vue')
-const Stations = import('pages/StationsPage.vue')
-const StationDetail = import('pages/StationDetail.vue')
+const Connections = import("pages/ConnectionsPage.vue");
+const ConnectionDetail = import("pages/ConnectionDetail.vue");
+const Stations = import("pages/StationsPage.vue");
+const StationDetail = import("pages/StationDetail.vue");
 
 const routes = [
   {
-    path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    path: "/",
+    component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') },
-      { path: 'settings', component: () => import('pages/SettingsPage.vue') },
-      { path: 'connections/:connectionId?',
+      { path: "", component: () => import("pages/IndexPage.vue") },
+      { path: "settings", component: () => import("pages/SettingsPage.vue") },
+      {
+        path: "connections/:connectionId?",
         children: [
           {
-            path: '',
-            name: 'connections',
+            path: "",
+            name: "connections",
             component: Connections,
           },
           {
-            path: ':connectionId',
-            name: 'connectionDetail',
+            path: ":connectionId",
+            name: "connectionDetail",
             component: ConnectionDetail,
           },
         ],
       },
-      { path: 'stations/:stationId?',
+      {
+        path: "stations/:stationId?",
         children: [
           {
-            path: '',
-            name: 'stations',
+            path: "",
+            name: "stations",
             component: Stations,
           },
           {
-            path: ':stationId',
-            name: 'stationDetail',
+            path: ":stationId",
+            name: "stationDetail",
             component: StationDetail,
           },
         ],
-      }
-    ]
+      },
+    ],
   },
 
   // Always leave this as last one,
   // but you can also remove it
   {
-    path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue')
-  }
-]
+    path: "/:catchAll(.*)*",
+    component: () => import("pages/ErrorNotFound.vue"),
+  },
+];
 
-export default routes
+export default routes;

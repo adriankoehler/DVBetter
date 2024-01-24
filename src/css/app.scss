@@ -1,76 +1,75 @@
 // app global css in SCSS form
 .q-page {
-    height: 1px; //min-height is set by quasar, but height-property is needed for grid/list-overflow to work
-    display: grid;
+  height: 1px; //min-height is set by quasar, but height-property is needed for grid/list-overflow to work
+  display: grid;
 }
 
 h1 {
-    font-size: 2rem;
-    line-height: 2rem;
-    font-weight: 600;
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 600;
 }
 
 h2 {
-    font-size: 1.5rem;
-    line-height: 1.5rem;
-    font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  font-weight: 500;
 }
 
-
 h3 {
-    font-size: 1.2rem;
-    line-height: 1.2rem;
-    font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  font-weight: 500;
 }
 
 h4 {
-    font-size: 1rem;
-    line-height: 1rem;
-    font-weight: 400;
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: 400;
 }
 
 // set the margin a little smaller than the quasar default
 .on-right {
-    margin-left: 8px
+  margin-left: 8px;
 }
 .on-left {
-    margin-right: 8px
+  margin-right: 8px;
 }
 
 .api_loading {
-    background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.95);
 
-    .q-inner-loading__label {
-        font-size: 1.1em;
-    }
+  .q-inner-loading__label {
+    font-size: 1.1em;
+  }
 }
 
 .content-wrapper {
-    padding: 0 $main-content-padding;
-    overflow-y: auto; //the search field should take all the place it needs, while the main content of the page overflows if needed
+  padding: 0 $main-content-padding;
+  overflow-y: auto; //the search field should take all the place it needs, while the main content of the page overflows if needed
 }
 
 // generic classes to apply the "standard" main content padding
 .q-pl-std {
-    padding-left: $main-content-padding;
+  padding-left: $main-content-padding;
 }
 .q-pr-std {
-    padding-right: $main-content-padding;
+  padding-right: $main-content-padding;
 }
 .q-pt-std {
-    padding-top: $main-content-padding;
+  padding-top: $main-content-padding;
 }
 .q-pb-std {
-    padding-bottom: $main-content-padding;
+  padding-bottom: $main-content-padding;
 }
 .q-px-std {
-    padding-left: $main-content-padding;
-    padding-right: $main-content-padding;
+  padding-left: $main-content-padding;
+  padding-right: $main-content-padding;
 }
 .q-py-std {
-    padding-top: $main-content-padding;
-    padding-bottom: $main-content-padding;
+  padding-top: $main-content-padding;
+  padding-bottom: $main-content-padding;
 }
 .q-pa-std {
-    padding: $main-content-padding;
+  padding: $main-content-padding;
 }

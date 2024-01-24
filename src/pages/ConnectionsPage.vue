@@ -3,7 +3,10 @@
     <div class="content-wrapper list hide-scrollbar">
       <h2>Bookmarks</h2>
       <list-entry
-        v-for="entry in [['Hauptbahnhof', 'Theaterplatz'], ['Spenerstraße', 'Burgkstraße']]"
+        v-for="entry in [
+          ['Hauptbahnhof', 'Theaterplatz'],
+          ['Spenerstraße', 'Burgkstraße'],
+        ]"
         :name="entry[0]"
         :name2="entry[1]"
         stationId="33000028"
@@ -20,6 +23,6 @@
 </template>
 
 <script setup>
-import SearchField from 'components/SearchField.vue'
-import ListEntry from 'components/ListEntry.vue'
+import SearchField from "components/SearchField.vue";
+import ListEntry from "components/ListEntry.vue";
 </script>
