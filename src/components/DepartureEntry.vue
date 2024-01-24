@@ -2,11 +2,11 @@
   <q-expansion-item header-class="departure-entry-header" expand-icon-class="expand-departure-icon">
 
     <template v-slot:header>
-      <!-- icons for mode of transportation possible : directions_bus,tram,train -->
       <q-item-section avatar> {{ line }}              </q-item-section>
       <q-item-section>
         <span>{{ direction }}
           <q-icon v-if="rerouted" class="on-right rotate-90" name="turn_sharp_left" size="xs"/>
+          <q-icon v-if="cancelled" class="on-right" name="cancel" size="xs"/>
         </span>
       </q-item-section>
       <q-item-section side>   {{ arrivalTimeString }} </q-item-section>
@@ -22,7 +22,7 @@
       </q-item-section>
       <q-item-section>
         <span>{{ platform.Type=="Railtrack" ? "Gleis" : "Steig"}} {{ platform.Name }}</span>
-        <!-- <span>Auslastung (vlt auch zu avatar?)</span> -->
+        <!-- <span>Auslastung (vlt auch zu avatar?)</span> TODO -->
       </q-item-section>
     </q-item>
 
@@ -33,17 +33,14 @@
 const props = defineProps(['departure'])
 import { dateFunctions } from 'stores/helperFunctions.js'
 
-// (todo) could be possible to periodically update the table with out manually triggering it
-// with props.departure.Id + props.departure.ScheduledTime
-
 const line = props.departure.LineName
 const direction = props.departure.Direction
-const mot = props.departure.Mot //Tram, CityBus, IntercityBus, SuburbanRailway, Train, +PlusBus ("Undefined")
-const delayed = props.departure.State == "Delayed" //daran vlt uhrzeitberechnung +-
-const rerouted = props.departure.RouteChanges.length != 0 //icon: alt_route, turn_sharp_left
-const cancelled = props.departure.CancelReasons.length != 0 //icon: cancel
-const occupancy = props.departure.Occupancy //icons: person, people, groups (ManySeats, StandingOnly)
-const platform = props.departure.Platform // {Name:"2", Type:"Platform"/"Railtrack"}
+const mot = props.departure.Mot //Tram, CityBus, IntercityBus, SuburbanRailway, Train, PlusBus, ("Undefined")
+const delayed = props.departure.State == "Delayed" //daran vlt uhrzeitberechnung +- TODO
+const rerouted = props.departure.RouteChanges.length != 0
+const cancelled = props.departure.CancelReasons.length != 0
+const occupancy = props.departure.Occupancy //icons: person, people, groups ("ManySeats, StandingOnly, Unknown")
+const platform = props.departure.Platform
 const arrivalDateScheduled = dateFunctions.convertVVOToDate(props.departure.ScheduledTime)
 const arrivalDateReal = dateFunctions.convertVVOToDate(props.departure.RealTime)
 
