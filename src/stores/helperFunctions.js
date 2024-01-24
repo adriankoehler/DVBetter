@@ -1,4 +1,6 @@
 import { Preferences } from '@capacitor/preferences';
+import beta from 'assets/BETA2007.gsb?url'
+import proj4 from 'proj4'
 
 export const dateFunctions = {
     // somewhat hacky way of deciphering the date string returned in the VVO API via regex capture groups and turn it into a date object
@@ -33,6 +35,22 @@ export const dateFunctions = {
           return hh + "h " + mm + "min"
         }
     }
+}
+
+export const geoFunctions = {
+  convertCoordinates_WGS84_GK4: async (long, lat) => {
+    const fromProjection = "WGS84"
+
+    // EPSG:31468 DHDN / 3-degree Gauss-Kruger zone 4
+    const buffer = await fetch(beta).then(res => res.arrayBuffer())
+    proj4.nadgrid('key', buffer); // used for Grid Based Datum Adjustments
+    const toProjection = "+proj=tmerc +lat_0=0 +lon_0=12 +k=1 +x_0=4500000 +y_0=0 +ellps=bessel +nadgrids=@key,null +units=m +no_defs +type=crs"
+
+    const coordinatesConverted = proj4(fromProjection, toProjection, [long, lat]);
+
+    // flip coordinates to match VVO
+    return [coordinatesConverted[1], coordinatesConverted[0]]
+  }
 }
 
 export const settingsFunctions = {
