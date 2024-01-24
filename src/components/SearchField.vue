@@ -69,11 +69,42 @@ const searchText2 = ref()
 const options = ref([])
 
 async function getPosition() {
-  const coordinates = await Geolocation.getCurrentPosition()
+  // const coordinates = await Geolocation.getCurrentPosition()
+  const coordinates = {"coords": {"longitude": 13.737389107414138, "latitude": 51.053956030891435}} // dummy coordinates in central dresden (theaterplatz)
   console.log('Current position:', coordinates.coords.latitude, coordinates.coords.longitude)
 
   const convertedCoordinates = await geoFunctions.convertCoordinates_WGS84_GK4( coordinates.coords.longitude, coordinates.coords.latitude)
-  console.log('Converted GK4 position:', convertedCoordinates)
+  console.log('Converted GK4 position:', convertedCoordinates[0], convertedCoordinates[1])
+
+  const searchQuery = "coord:"+convertedCoordinates[0]+":"+convertedCoordinates[1]
+
+  api.post('tr/pointfinder', {
+    query: searchQuery,
+    limit: 10,
+    assignedstops: true
+  })
+    .then((response) => {
+      console.log(response)
+      if(response.data.Status.Code !== "Ok" || response.data.PointStatus !== "Identified"){
+        $q.notify({
+          color: 'negative',
+          message: 'An API error occurred',
+          caption: response.data.Status.Message ?? "Location could not be identified or may be outside the VVO",
+          icon: 'report_problem'
+        })
+      } else {
+        const foundPoints = response.data.Points
+        console.log(foundPoints)
+      }
+    })
+    .catch((e) => {
+      console.log("error for ", searchTerm, e)
+      $q.notify({
+        color: 'negative',
+        message: 'An error occurred fetching data from the VVO API',
+        icon: 'report_problem'
+      })
+    })
 }
 
 function findDepartures() {

@@ -46,10 +46,8 @@ export const geoFunctions = {
     proj4.nadgrid('key', buffer); // used for Grid Based Datum Adjustments
     const toProjection = "+proj=tmerc +lat_0=0 +lon_0=12 +k=1 +x_0=4500000 +y_0=0 +ellps=bessel +nadgrids=@key,null +units=m +no_defs +type=crs"
 
-    const coordinatesConverted = proj4(fromProjection, toProjection, [long, lat]);
-
-    // flip coordinates to match VVO
-    return [coordinatesConverted[1], coordinatesConverted[0]]
+    const convertedCoordinates = proj4(fromProjection, toProjection, [long, lat]);
+    return [Math.round(convertedCoordinates[0]), Math.round(convertedCoordinates[1])]
   }
 }
 
