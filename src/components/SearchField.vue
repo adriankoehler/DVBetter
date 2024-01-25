@@ -6,11 +6,13 @@
       color="grey-10"
       bg-color="grey-2"
       label="Search for station"
+      clearable
 
       v-model="searchText"
       :options="options"
       option-value="id"
       option-label="name"
+      ref="station1Select"
 
       hide-selected
       fill-input
@@ -18,13 +20,6 @@
       input-debounce="120"
       @filter="filterFn"
     >
-      <template v-slot:no-option>
-        <q-item>
-          <q-item-section class="text-grey">
-            No results
-          </q-item-section>
-        </q-item>
-      </template>
 
     <!--      TODO: show name+abbreviation when stop is selected, delete selection when on new search (hide-selected+fill-input have to be removed) -->
 <!--      <template v-slot:selected-item="scope">-->
@@ -67,6 +62,7 @@ const props = defineProps(['type'])
 const searchText = ref()
 const searchText2 = ref()
 const options = ref([])
+const station1Select = ref(null)
 
 async function getPosition() {
   // const coordinates = await Geolocation.getCurrentPosition()
@@ -93,12 +89,25 @@ async function getPosition() {
           icon: 'report_problem'
         })
       } else {
+        options.value = [] // clear any previous searches
         const foundPoints = response.data.Points
-        console.log(foundPoints)
+        const regex = /(\d{8})\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
+        foundPoints.forEach((point) => {
+          const match = point.match(regex)
+          if (match) {
+            const stopId = match[1]
+            const stopName = match[2]
+            const stopAbbreviation = match[3]
+            options.value.push({id: stopId, name: stopName, abbreviation: stopAbbreviation})
+
+            // TODO should probably be the FIRST match, instead of last
+            station1Select.value.add({id: stopId, name: stopName, abbreviation: stopAbbreviation})
+          }
+        })
       }
     })
     .catch((e) => {
-      console.log("error for ", searchTerm, e)
+      console.log("error while getting stations via gps location ", e)
       $q.notify({
         color: 'negative',
         message: 'An error occurred fetching data from the VVO API',
@@ -111,8 +120,13 @@ function findDepartures() {
   router.push(`/stations/${searchText.value.id}`)
 }
 
+// if user searched ("filtered") for a station (search string with 3+ letters) show suggestions,
+// if no search string was given: don't abort immediately to show GPS suggestions if there are any
 function filterFn (val, update, abort) {
   if (val.length < 3) {
+    update(() => {
+      station1Select.value.refresh() // not even necessary?
+    })
     abort()
     return
   }
