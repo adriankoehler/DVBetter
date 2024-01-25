@@ -92,7 +92,7 @@ async function getPosition() {
         options.value = [] // clear any previous searches
         const foundPoints = response.data.Points
         const regex = /(\d{8})\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
-        foundPoints.forEach((point) => {
+        foundPoints.forEach((point, i) => {
           const match = point.match(regex)
           if (match) {
             const stopId = match[1]
@@ -100,8 +100,10 @@ async function getPosition() {
             const stopAbbreviation = match[3]
             options.value.push({id: stopId, name: stopName, abbreviation: stopAbbreviation})
 
-            // TODO should probably be the FIRST match, instead of last
-            station1Select.value.add({id: stopId, name: stopName, abbreviation: stopAbbreviation})
+            if (i===1) {
+              // the first (nearest) station gets automatically added to the search bar
+              station1Select.value.add({id: stopId, name: stopName, abbreviation: stopAbbreviation})
+            }
           }
         })
       }
