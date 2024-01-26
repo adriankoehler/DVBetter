@@ -11,7 +11,6 @@
           :departure="departureEntry"
           :key="departureEntry.Id + forceRefreshId"
         />
-        <!-- other option to force refresh of departures:  :key="departureEntry.Id + (Math.floor(Date.now() / 6000))" -->
       </q-pull-to-refresh>
     </div>
 
@@ -38,7 +37,8 @@ import { ref } from 'vue'
 import { useRoute } from "vue-router"
 import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
-import { settingsFunctions } from 'stores/helperFunctions.js'
+import { Preferences } from "@capacitor/preferences";
+import {dateFunctions, settingsFunctions} from 'stores/helperFunctions.js'
 import DepartureEntry from 'components/DepartureEntry.vue'
 import ExpandableMap from 'components/ExpandableMap.vue'
 
@@ -58,7 +58,7 @@ const route = useRoute()
 const stationId = route.params.stationId //f.e.: Hbf=33000028
 
 function refresh(done) {
-  forceRefreshId++
+  forceRefreshId++ // lets the "departure entry"-component know that it should be reloaded (update relative departure times)
   fetchDepartures()
   done()
 }
@@ -66,7 +66,7 @@ function refresh(done) {
 function fetchDepartures() {
   api.post('/dm', {
           stopid: stationId,
-          limit: 10,
+          limit: 15,
           mot: [
             "Tram",
             "CityBus",
@@ -75,9 +75,9 @@ function fetchDepartures() {
             "Train"
           ]
         })
-      .then((response) => {
+      .then(async (response) => {
         console.log(response.data)
-        if(response.data.Status.Code != "Ok"){
+        if (response.data.Status.Code != "Ok") {
           $q.notify({
             color: 'negative',
             message: 'An API error occurred',
@@ -87,16 +87,42 @@ function fetchDepartures() {
         } else {
           departureData.value = response.data.Departures
           stationName.value = response.data.Name
+
+          await Preferences.set({
+            key: stationId + "_offline",
+            value: JSON.stringify({
+              "departures": response.data.Departures,
+              "name": response.data.Name,
+              "lastDeparture": response.data.Departures[14].ScheduledTime
+            })
+          })
         }
         loading.value = false
       })
-      .catch(() => {
+      .catch(async () => {
+        const cachedData = await Preferences.get({key: stationId + "_offline"})
+        const cachedStation = JSON.parse(cachedData.value)
+
+        // only use cached data if it's still relevant
+        if (cachedStation && dateFunctions.convertVVOToDate(cachedStation.lastDeparture) > Date.now()) {
+          $q.notify({
+            color: 'info',
+            textColor: 'black',
+            message: 'Cached data used for station',
+            caption: 'No current data could be fetched from the VVO API',
+            icon: 'download_for_offline'
+          })
+          departureData.value = cachedStation.departures
+          stationName.value = cachedStation.name
+        } else {
+          $q.notify({
+            color: 'negative',
+            message: 'An error occurred fetching data from the VVO API',
+            caption: 'No cached data was available for this station',
+            icon: 'report_problem'
+          })
+        }
         loading.value = false
-        $q.notify({
-          color: 'negative',
-          message: 'An error occurred fetching data from the VVO API',
-          icon: 'report_problem'
-        })
       })
 }
 

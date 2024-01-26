@@ -1,5 +1,9 @@
 <template>
-  <q-expansion-item header-class="departure-entry-header" expand-icon-class="expand-departure-icon">
+  <q-expansion-item
+    v-if="!alreadyLeft"
+    header-class="departure-entry-header"
+    expand-icon-class="expand-departure-icon"
+  >
 
     <template v-slot:header>
       <q-item-section avatar> {{ line }}              </q-item-section>
@@ -40,14 +44,13 @@ const delayed = props.departure.State == "Delayed" //daran vlt uhrzeitberechnung
 const rerouted = props.departure.RouteChanges.length != 0
 const cancelled = props.departure.CancelReasons.length != 0
 const occupancy = props.departure.Occupancy //icons: person, people, groups ("ManySeats, StandingOnly, Unknown")
-const platform = props.departure.Platform
+const platform = props.departure.Platform ?? "" // "Platform" attribute can sometimes be missing
 const arrivalDateScheduled = dateFunctions.convertVVOToDate(props.departure.ScheduledTime)
 const arrivalDateReal = dateFunctions.convertVVOToDate(props.departure.RealTime)
 
-console.log(line, mot, "delayed", delayed, "rerouted", rerouted, "cancelled", cancelled, "occupancy", occupancy)
-
 // since the Realtime date is not always available, get the scheduled time if necessary
 const arrivalTimeString = dateFunctions.getArrivalTimeString(arrivalDateReal ? arrivalDateReal : arrivalDateScheduled)
+const alreadyLeft = arrivalDateReal ? arrivalDateReal < Date.now() : arrivalDateScheduled < Date.now()
 
 // TODO if cancelled/rerouted=true -> fetch all route changes and get the reason
 </script>
