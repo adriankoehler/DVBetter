@@ -3,9 +3,13 @@
     <div class="content-wrapper no-x-padding">
       <q-pull-to-refresh @refresh="refresh">
         <div class="row">
-          <h2 class="q-pl-std">{{ stationName }}</h2>
+          <h2 class="q-pl-std">
+            <span v-if="stationAbbreviation" class="text-weight-bold">{{ stationAbbreviation }} | </span>
+            <span class="text-weight-regular"> {{ stationName }}</span>
+          </h2>
           <q-icon id="bookmark-station-icon" class="self-center cursor-pointer q-ml-auto q-pr-std" :name="icon" size="sm" @click="bookmark()"/>
         </div>
+        <q-separator />
         <departure-entry
           v-for="departureEntry in departureData"
           :departure="departureEntry"
@@ -41,11 +45,13 @@ import { Preferences } from "@capacitor/preferences";
 import {dateFunctions, settingsFunctions} from 'stores/helperFunctions.js'
 import DepartureEntry from 'components/DepartureEntry.vue'
 import ExpandableMap from 'components/ExpandableMap.vue'
+import stationsJson from "assets/stations_dresden.json";
 
 const $q = useQuasar()
 const loading = ref(true)
 const departureData = ref(null)
 const stationName = ref("")
+const stationAbbreviation = ref("")
 const route = useRoute()
 const stationId = ref(route.params.stationId) //f.e.: Hbf=33000028
 
@@ -87,6 +93,10 @@ function fetchDepartures() {
         } else {
           departureData.value = response.data.Departures
           stationName.value = response.data.Name
+          const stationData = stationsJson.features.filter(d => d.properties.id === stationId.value)
+          if (stationData.length > 0) {
+            stationAbbreviation.value = stationData[0].properties.abbreviation
+          }
 
           await Preferences.set({
             key: stationId.value + "_offline",
