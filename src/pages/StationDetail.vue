@@ -14,7 +14,7 @@
       </q-pull-to-refresh>
     </div>
 
-    <expandable-map :station="stationName"/>
+    <expandable-map :station="stationId"/>
   </q-page>
 
   <q-inner-loading
@@ -46,6 +46,9 @@ const $q = useQuasar()
 const loading = ref(true)
 const departureData = ref(null)
 const stationName = ref("")
+const route = useRoute()
+const stationId = ref(route.params.stationId) //f.e.: Hbf=33000028
+
 const icon = ref("bookmark_border")
 let forceRefreshId = 0; //increased in refresh(); lets the component know that it should be reloaded (to update/recalculate the relative departure times)
 
@@ -53,9 +56,6 @@ let forceRefreshId = 0; //increased in refresh(); lets the component know that i
 // departureData.value = [ { "Id": "voe:11008: :H:j24", "DlId": "de:vvo:11-8", "LineName": "8", "Direction": "Südvorstadt", "Platform": { "Name": "4", "Type": "Platform" }, "Mot": "Tram", "RealTime": "/Date(1703804220000-0000)/", "ScheduledTime": "/Date(1703804280000-0000)/", "State": "InTime", "RouteChanges": [ "19653" ], "Diva": { "Number": "11008", "Network": "voe" }, "CancelReasons": [], "Occupancy": "Unknown" }, { "Id": "voe:21066: :R:j24", "DlId": "de:vvo:21-66", "LineName": "66", "Direction": "Nickern", "Platform": { "Name": "5", "Type": "Platform" }, "Mot": "CityBus", "RealTime": "/Date(1703804280000-0000)/", "ScheduledTime": "/Date(1703804280000-0000)/", "State": "InTime", "RouteChanges": [ "19653", "19471" ], "Diva": { "Number": "21066", "Network": "voe" }, "CancelReasons": [], "Occupancy": "Unknown" }, { "Id": "voe:11010: :H:j24", "DlId": "de:vvo:11-10", "LineName": "10", "Direction": "Gorbitz", "Platform": { "Name": "2", "Type": "Platform" }, "Mot": "Tram", "RealTime": "/Date(1703804340000-0000)/", "ScheduledTime": "/Date(1703804220000-0000)/", "State": "Delayed", "RouteChanges": [ "19446", "19653" ], "Diva": { "Number": "11010", "Network": "voe" }, "CancelReasons": [], "Occupancy": "Unknown" }, { "Id": "ddb:92D01: :R:j24", "DlId": "de:vvo:10-1", "LineName": "S1", "Direction": "Meißen S-Bf. Triebischtal", "Platform": { "Name": "14", "Type": "Railtrack" }, "Mot": "SuburbanRailway", "RealTime": "/Date(1703804400000-0000)/", "ScheduledTime": "/Date(1703804400000-0000)/", "State": "InTime", "RouteChanges": [ "19695", "19688" ], "Diva": { "Number": "92D01", "Network": "ddb" }, "CancelReasons": [], "Occupancy": "Unknown" }, { "Id": "voe:11003: :H:j24", "DlId": "de:vvo:11-3", "LineName": "3", "Direction": "Wilder Mann", "Platform": { "Name": "3", "Type": "Platform" }, "Mot": "Tram", "RealTime": "/Date(1703804700000-0000)/", "ScheduledTime": "/Date(1703804700000-0000)/", "State": "InTime", "RouteChanges": [ "19653" ], "Diva": { "Number": "11003", "Network": "voe" }, "CancelReasons": [], "Occupancy": "Unknown" } ]
 // stationName.value = "Wörgl"
 // loading.value = false
-
-const route = useRoute()
-const stationId = route.params.stationId //f.e.: Hbf=33000028
 
 function refresh(done) {
   forceRefreshId++ // lets the "departure entry"-component know that it should be reloaded (update relative departure times)
@@ -65,7 +65,7 @@ function refresh(done) {
 
 function fetchDepartures() {
   api.post('/dm', {
-          stopid: stationId,
+          stopid: stationId.value,
           limit: 15,
           mot: [
             "Tram",
@@ -89,7 +89,7 @@ function fetchDepartures() {
           stationName.value = response.data.Name
 
           await Preferences.set({
-            key: stationId + "_offline",
+            key: stationId.value + "_offline",
             value: JSON.stringify({
               "departures": response.data.Departures,
               "name": response.data.Name,
@@ -100,7 +100,7 @@ function fetchDepartures() {
         loading.value = false
       })
       .catch(async () => {
-        const cachedData = await Preferences.get({key: stationId + "_offline"})
+        const cachedData = await Preferences.get({key: stationId.value + "_offline"})
         const cachedStation = JSON.parse(cachedData.value)
 
         // only use cached data if it's still relevant
@@ -126,8 +126,8 @@ function fetchDepartures() {
       })
 }
 
-if (stationId) {
-  settingsFunctions.isBookmarked(stationId).then(response => {
+if (stationId.value) {
+  settingsFunctions.isBookmarked(stationId.value).then(response => {
     icon.value = response ? "bookmark" : "bookmark_border"
   })
 
@@ -135,7 +135,7 @@ if (stationId) {
 }
 
 async function bookmark() {
-  const isBookmarked = await settingsFunctions.bookmark(stationId)
+  const isBookmarked = await settingsFunctions.bookmark(stationId.value)
   icon.value = isBookmarked ? "bookmark" : "bookmark_border"
 }
 </script>

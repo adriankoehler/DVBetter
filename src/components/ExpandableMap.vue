@@ -19,9 +19,6 @@ import * as L from 'leaflet';
 import stationsJson from 'assets/stations_dresden.json'
 
 const props = defineProps(['station'])
-
-// dark background/white icons+text?, add icons
-
 const initialMap = ref(null);
 const mapOptions = { zoomControl: false, zoom:1, zoomAnimation:false, fadeAnimation:true, markerZoomAnimation:true }
 const initialCenter = [51.05090121, 13.73357] // Postplatz
@@ -49,28 +46,21 @@ onMounted(()=> {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(initialMap.value);
 
-    // L.marker([24.3746, 88.6004], {icon: myIcon}).addTo(initialMap.value);
-});
 
-watch(()=> props.station, (newVal)=> {
-    // since the station name is not immediately available (wait for API call in StationDetail component),
-    // we have to watch for a props.station change and then update the map to show the station
-
-    const stationData = stationsJson.features.filter(d => d.properties.name == newVal)
-    if (stationData.length > 1) {
-      console.log("multiple stations found for name, take first one", stationData[0])
-    } else if (stationData.length < 1) {
-      console.log("no geo data found for this station, map will only display default location")
-      // TODO display grey overlay on map with error.. or get the geo data elsewhere (f.e. API pointfinder + convert GK4 coordinates)
-      return
-    }
-
+  const stationData = stationsJson.features.filter(d => d.properties.id == props.station)
+  if (stationData.length < 1) {
+    console.log("no geo data found for this station, map will only display default location")
+    // TODO display grey overlay on map with error.. or get the geo data elsewhere (f.e. API pointfinder + convert GK4 coordinates)
+  } else {
     let lonCoordinate = stationData[0].geometry.coordinates[0]
     let latCoordinate = stationData[0].geometry.coordinates[1]
 
     const newCoordinates = [latCoordinate, lonCoordinate]
     initialMap.value.setView(newCoordinates)
-})
+  }
+
+    // L.marker([24.3746, 88.6004], {icon: myIcon}).addTo(initialMap.value);
+});
 
 </script>
 
