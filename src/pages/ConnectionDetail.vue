@@ -1,9 +1,22 @@
 <template>
   <q-page>
-    <div class="content-wrapper">
-      <h1>Connection from {{ stationIdOrigin }} to {{ stationIdDestination }}</h1>
-      <h2>Connections:</h2>
-      <div>{{ connectionData }}</div>
+    <div class="content-wrapper no-x-padding">
+      <div class="row">
+        <h2 class="q-pl-std">
+          <span> {{ stationNameOrigin }}</span>
+          <span v-if="stationAbbreviationOrigin"> ({{ stationAbbreviationOrigin }})</span>
+          <span> - </span>
+          <span> {{ stationNameDestination }}</span>
+          <span v-if="stationAbbreviationDestination"> ({{ stationAbbreviationDestination }})</span>
+        </h2>
+<!--        <q-icon id="bookmark-station-icon" class="self-center cursor-pointer q-ml-auto q-pr-std" :name="icon" size="sm" @click="bookmark()"/>-->
+      </div>
+      <q-separator />
+      <connection-entry
+        v-for="connectionEntry in connectionData"
+        :connection="connectionEntry"
+        :key="connectionEntry.RouteId"
+      />
     </div>
   </q-page>
 
@@ -19,17 +32,33 @@ import { ref } from 'vue'
 import { useRoute } from "vue-router"
 import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
+import ConnectionEntry from 'components/ConnectionEntry.vue'
+import stationsJson from "assets/stations_dresden.json"
 
 const $q = useQuasar()
 const connectionData = ref(null)
 const stationNameOrigin = ref("")
+const stationAbbreviationOrigin = ref("")
 const stationNameDestination = ref("")
+const stationAbbreviationDestination = ref("")
 const loading = ref(true)
 
 const route = useRoute()
 const connectionId = route.params.connectionId //f.e.: Hbf to Theaterplatz = "33000028-33000020"
 const stationIdOrigin = connectionId.substring(0, connectionId.indexOf("-")) //f.e.: Hbf=33000028
 const stationIdDestination = connectionId.substring(connectionId.indexOf("-") + 1)
+
+// get the name and abbreviation for the stations from the stations json
+const stationDataOrigin = stationsJson.features.filter(d => d.properties.id === stationIdOrigin)
+if (stationDataOrigin.length > 0) {
+  stationNameOrigin.value = stationDataOrigin[0].properties.name
+  stationAbbreviationOrigin.value = stationDataOrigin[0].properties.abbreviation
+}
+const stationDataDestination = stationsJson.features.filter(d => d.properties.id === stationIdDestination)
+if (stationDataDestination.length > 0) {
+  stationNameDestination.value = stationDataDestination[0].properties.name
+  stationAbbreviationDestination.value = stationDataDestination[0].properties.abbreviation
+}
 
 if (connectionId) {
   api.post('/tr/trips?format=json', {
@@ -56,8 +85,7 @@ if (connectionId) {
             // time: "2023-12-08T21:36:42.775Z"
         })
       .then((response) => {
-        console.log(response.data)
-        if(response.data.Status.Code != "Ok"){
+        if(response.data.Status.Code !== "Ok"){
           $q.notify({
             color: 'negative',
             message: 'An API error occurred',
@@ -66,12 +94,7 @@ if (connectionId) {
           })
         } else {
           connectionData.value = response.data.Routes
-          // TODO get station names
-          // stationNameOrigin.value =
-          // stationNameDestination.value =
-
-          // TODO display connections
-          // Routes[{Duration, Interchanges, Price, MotChain: { Type(Footpath, Tram), Name(11, Fußweg), Direction?(Pennrich)} },..]
+          console.log(connectionData.value)
         }
         loading.value = false
       })

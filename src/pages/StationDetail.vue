@@ -5,7 +5,7 @@
         <div class="row">
           <h2 class="q-pl-std">
             <span v-if="stationAbbreviation" class="text-weight-bold">{{ stationAbbreviation }} | </span>
-            <span class="text-weight-regular"> {{ stationName }}</span>
+            <span class="text-weight-regular"> {{ stationName }} </span>
           </h2>
           <q-icon id="bookmark-station-icon" class="self-center cursor-pointer q-ml-auto q-pr-std" :name="icon" size="sm" @click="bookmark()"/>
         </div>
@@ -42,7 +42,7 @@ import { useRoute } from "vue-router"
 import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
 import { Preferences } from "@capacitor/preferences";
-import {dateFunctions, settingsFunctions} from 'stores/helperFunctions.js'
+import { dateFunctions, settingsFunctions } from 'stores/helperFunctions.js'
 import DepartureEntry from 'components/DepartureEntry.vue'
 import ExpandableMap from 'components/ExpandableMap.vue'
 import stationsJson from "assets/stations_dresden.json";

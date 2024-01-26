@@ -21,6 +21,18 @@ export const dateFunctions = {
       return new Date(unixTimestamp)
     },
 
+    // returns the time of a Date formatted as HH:mm
+    getTimeFormatted: (arrivalDate) => {
+        if (!arrivalDate) {
+          console.log("Error: date was invalid")
+          return false
+        }
+
+        const hours = arrivalDate.getHours()
+        const minutes = String(arrivalDate.getMinutes()).padStart(2, '0') // add leading 0 if minutes are a single digit
+        return hours + ":" + minutes
+    },
+
     // returns the hours/minutes until the next departure as a string (f.e. "1h 5min")
     getArrivalTimeString: (arrivalDate) => {
         let diff = arrivalDate.getTime() - Date.now()
