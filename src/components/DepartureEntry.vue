@@ -9,8 +9,8 @@
       <q-item-section avatar> {{ line }}              </q-item-section>
       <q-item-section>
         <span>{{ direction }}
-          <q-icon v-if="rerouted" class="on-right rotate-90" name="turn_sharp_left" size="xs"/>
           <q-icon v-if="cancelled" class="on-right" name="cancel" size="xs"/>
+          <q-icon v-else-if="rerouted" class="on-right rotate-90" name="turn_sharp_left" size="xs"/>
         </span>
       </q-item-section>
       <q-item-section side>   {{ arrivalTimeString }} </q-item-section>
