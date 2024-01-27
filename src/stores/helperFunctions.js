@@ -125,9 +125,18 @@ export const settingsFunctions = {
     return bookmarkedStations
   },
 
-  // TODO wie oben
   getBookmarkedConnections: async () => {
-    let stations = await Preferences.keys()
-    return stations.keys.filter(key => key.match(/\d{8}-\d{8}/))
+    const keys = await Preferences.keys()
+    const connections = keys.keys.filter(key => key.match(/^\d{8}-\d{8}$/))
+
+    let bookmarkedConnections = []
+    for (const connectionId of connections) {
+      let connection = await Preferences.get({ key: connectionId })
+      if(JSON.parse(connection.value)){
+        bookmarkedConnections.push(connectionId)
+      }
+    }
+
+    return bookmarkedConnections
   }
 }

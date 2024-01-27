@@ -10,14 +10,21 @@
 
   <!-- connection A→B -->
   <div v-else class="entry bg-grey-3 q-py-md q-px-lg rounded-borders cursor-pointer row" @click="$router.push('/connections/' + props.stationId + '-' + props.stationId2)">
-    <span class="col-grow">{{ props.name }}</span>
+    <!-- FIXME should not grow to avoid arrow not lining up -->
+    <span class="col-grow">
+      <span v-if="props.abbreviation"><b>{{ props.abbreviation }}</b> | </span>
+      <span>{{ props.name }}</span>
+    </span>
     <q-icon class="self-center" name="arrow_forward" />
-    <span class="col-grow text-right">{{ props.name2 }}</span>
+    <span class="col-grow text-right">
+      <span v-if="props.abbreviation2"><b>{{ props.abbreviation2 }}</b> | </span>
+      <span>{{ props.name2 }}</span>
+    </span>
   </div>
 </template>
 
 <script setup>
-const props = defineProps(['name', 'stationId', 'name2', 'stationId2', 'abbreviation'])
+const props = defineProps(['name', 'stationId', 'name2', 'stationId2', 'abbreviation', 'abbreviation2'])
 </script>
 
 <style lang="scss">

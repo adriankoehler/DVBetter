@@ -76,7 +76,6 @@ async function getPosition() {
     assignedstops: true
   })
     .then((response) => {
-      console.log(response)
       if(response.data.Status.Code !== "Ok" || response.data.PointStatus !== "Identified"){
         $q.notify({
           color: 'negative',
