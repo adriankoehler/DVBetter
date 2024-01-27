@@ -56,7 +56,7 @@ let motChainIcons = props.connection.MotChain.map((mot) => {
     return "directions_walk"
   } else if (mot.Type === "Tram") {
     return "tram"
-  } else if (mot.Type === "CityBus") {
+  } else if (mot.Type === "CityBus" || mot.Type === "Bus") {
     return "directions_bus"
   } else if (mot.Type === "IntercityBus" || mot.Type === "PlusBus") {
     return "directions_bus_filled"
