@@ -697,6 +697,27 @@
     {
       "type": "Feature",
       "properties": {
+        "number": "de:14612:35",
+        "nameWithCity": "Dresden Am Zwingerteich",
+        "name": "Am Zwingerteich",
+        "city": "Dresden",
+        "tariffZone1": "0100",
+        "tariffZone2": "",
+        "tariffZone3": "",
+        "id": "33000035",
+        "abbreviation": "AZT"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.7304955,
+          51.0543997
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "number": "de:14612:37",
         "nameWithCity": "Dresden Postplatz",
         "name": "Postplatz",
@@ -704,8 +725,8 @@
         "tariffZone1": "0100",
         "tariffZone2": "",
         "tariffZone3": "",
-        "id": "33000035",
-        "abbreviation": "AZT"
+        "id": "33000037",
+        "abbreviation": "POS"
       },
       "geometry": {
         "type": "Point",
