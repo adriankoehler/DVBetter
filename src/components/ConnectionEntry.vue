@@ -71,7 +71,7 @@ let motChainIcons = props.connection.MotChain.map((mot) => {
 motChainIcons = [].concat(...motChainIcons.map(n => [n, "horizontal_rule"])).slice(0, -1)
 // TODO add detailed connection view
 
-// TODO if cancelled/rerouted=true -> fetch all route changes and get the reason
+// TODOLATER if cancelled/rerouted=true -> fetch all route changes and get the reason
 </script>
 
 <style lang="scss">

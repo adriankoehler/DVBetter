@@ -82,8 +82,7 @@ function fetchDepartures() {
           ]
         })
       .then(async (response) => {
-        console.log(response.data)
-        if (response.data.Status.Code != "Ok") {
+        if (response.data.Status.Code !== "Ok") {
           $q.notify({
             color: 'negative',
             message: 'An API error occurred',
@@ -103,7 +102,7 @@ function fetchDepartures() {
             value: JSON.stringify({
               "departures": response.data.Departures,
               "name": response.data.Name,
-              "lastDeparture": response.data.Departures[14].ScheduledTime
+              "lastDeparture": response.data.Departures[response.data.Departures.length-1].ScheduledTime
             })
           })
         }
