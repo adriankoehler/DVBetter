@@ -1,76 +1,72 @@
 <template>
-  <div class="search-field self-end">
-    <q-select
-      dense
-      filled
-      color="grey-10"
-      bg-color="grey-2"
-      label="Search for station"
-      clearable
+  <q-select
+    dense
+    filled
+    color="grey-10"
+    bg-color="grey-2"
+    label="Search for station"
+    clearable
 
-      v-model="searchText"
-      :options="options"
-      option-value="id"
-      option-label="name"
-      ref="station1Select"
+    v-model="searchText"
+    :options="options"
+    option-value="id"
+    option-label="name"
+    ref="stationSelect"
 
-      hide-selected
-      fill-input
-      use-input
-      input-debounce="120"
-      @filter="filterFn"
-    >
+    hide-selected
+    fill-input
+    use-input
+    input-debounce="120"
+    @filter="filterFn"
+  >
 
-    <!--      TODO: show name+abbreviation when stop is selected, delete selection when on new search (hide-selected+fill-input have to be removed) -->
+<!-- TODO: show name+abbreviation when stop is selected, delete selection when on new search (hide-selected+fill-input have to be removed) -->
 <!--      <template v-slot:selected-item="scope">-->
 <!--        {{ scope.opt.name }} ( {{ scope.opt.abbreviation }} )-->
 <!--      </template>-->
 
-      <template v-slot:option="scope">
-        <q-item v-bind="scope.itemProps">
-          <q-item-section>
-            <q-item-label>{{ scope.opt.name }}</q-item-label>
-            <q-item-label caption>{{ scope.opt.abbreviation }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </template>
+    <template v-slot:option="scope">
+      <q-item v-bind="scope.itemProps">
+        <q-item-section>
+          <q-item-label>{{ scope.opt.name }}</q-item-label>
+          <q-item-label caption>{{ scope.opt.abbreviation }}</q-item-label>
+        </q-item-section>
+      </q-item>
+    </template>
 
-      <template v-slot:append>
-        <q-btn flat round color="primary" icon="my_location" @click="getPosition()"/>
-      </template>
-    </q-select>
-
-    <q-input v-if="type==='connections'" dense filled color="grey-10" bg-color="grey-2" label="Search for station" v-model="searchText2"></q-input>
-
-    <q-btn v-if="type==='departures'" @click="findDepartures" color="primary" label="Find departures" no-caps/>
-    <q-btn v-else color="primary" label="Find departures" no-caps/>
-  </div>
+    <template v-slot:append>
+      <q-btn flat round color="primary" icon="my_location" @click="getPosition()"/>
+    </template>
+  </q-select>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from "vue-router"
-import { useQuasar } from "quasar";
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 import { Geolocation } from '@capacitor/geolocation';
 import { geoFunctions } from 'stores/helperFunctions.js'
-import { api } from "boot/axios";
+import { api } from 'boot/axios'
 
 const $q = useQuasar()
 const router = useRouter()
 
 const props = defineProps(['type'])
-const searchText = ref()
-const searchText2 = ref()
 const options = ref([])
-const station1Select = ref(null)
+const stationSelect = ref(null)
+const searchText = ref()
+
+defineExpose({
+  searchText
+});
 
 async function getPosition() {
   // const coordinates = await Geolocation.getCurrentPosition()
   const coordinates = {"coords": {"longitude": 13.737389107414138, "latitude": 51.053956030891435}} // dummy coordinates in central dresden (theaterplatz)
-  console.log('Current position:', coordinates.coords.latitude, coordinates.coords.longitude)
+  // console.log('Current position:', coordinates.coords.latitude, coordinates.coords.longitude)
 
   const convertedCoordinates = await geoFunctions.convertCoordinates_WGS84_GK4( coordinates.coords.longitude, coordinates.coords.latitude)
-  console.log('Converted GK4 position:', convertedCoordinates[0], convertedCoordinates[1])
+  // console.log('Converted GK4 position:', convertedCoordinates[0], convertedCoordinates[1])
 
   const searchQuery = "coord:"+convertedCoordinates[0]+":"+convertedCoordinates[1]
 
@@ -98,11 +94,12 @@ async function getPosition() {
             const stopId = match[1]
             const stopName = match[2]
             const stopAbbreviation = match[3]
+
             options.value.push({id: stopId, name: stopName, abbreviation: stopAbbreviation})
 
             if (i===1) {
               // the first (nearest) station gets automatically added to the search bar
-              station1Select.value.add({id: stopId, name: stopName, abbreviation: stopAbbreviation})
+              stationSelect.value.add({id: stopId, name: stopName, abbreviation: stopAbbreviation})
             }
           }
         })
@@ -118,16 +115,12 @@ async function getPosition() {
     })
 }
 
-function findDepartures() {
-  router.push(`/stations/${searchText.value.id}`)
-}
-
 // if user searched ("filtered") for a station (search string with 3+ letters) show suggestions,
 // if no search string was given: don't abort immediately to show GPS suggestions if there are any
 function filterFn (val, update, abort) {
   if (val.length < 3) {
     update(() => {
-      station1Select.value.refresh() // not even necessary?
+      stationSelect.value.refresh() // not even necessary?
     })
     abort()
     return
@@ -177,8 +170,6 @@ function filterFn (val, update, abort) {
       })
   })
 }
-
-
 </script>
 
 <style lang="scss">

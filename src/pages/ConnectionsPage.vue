@@ -15,11 +15,11 @@
       <p class="text-grey-6">(none)</p>
     </div>
 
-    <search-field type="connections" />
+    <search-area type="connections" />
   </q-page>
 </template>
 
 <script setup>
-import SearchField from 'components/SearchField.vue'
+import SearchArea from 'components/SearchArea.vue'
 import ListEntry from 'components/ListEntry.vue'
 </script>

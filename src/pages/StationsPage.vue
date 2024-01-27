@@ -19,13 +19,13 @@
       />
     </div>
 
-    <search-field type="departures" />
+    <search-area type="departures" />
   </q-page>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import SearchField from 'components/SearchField.vue'
+import SearchArea from 'components/SearchArea.vue'
 import ListEntry from 'components/ListEntry.vue'
 import { settingsFunctions } from 'stores/helperFunctions.js'
 import stationsJson from 'assets/stations_dresden.json'
