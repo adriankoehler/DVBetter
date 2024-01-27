@@ -25,8 +25,8 @@
         <q-icon v-if="mot === 'Train'" name="directions_railway_filled" size="xs"/>
       </q-item-section>
       <q-item-section>
-        <span>{{ platform.Type=="Railtrack" ? "Gleis" : "Steig"}} {{ platform.Name }}</span>
-        <!-- <span>Auslastung (vlt auch zu avatar?)</span> TODO -->
+        <span>{{ platform.Type === "Railtrack" ? "Gleis" : "Steig"}} {{ platform.Name }}</span>
+         <span v-if="occupancy && occupancy !== 'Unknown'">Auslastung {{ occupancy === "ManySeats" ? "gering" : "hoch"}}</span>
       </q-item-section>
     </q-item>
 
