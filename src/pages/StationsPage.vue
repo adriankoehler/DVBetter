@@ -30,7 +30,8 @@ import SearchArea from 'components/SearchArea.vue'
 import ListEntry from 'components/ListEntry.vue'
 import { settingsFunctions } from 'stores/helperFunctions.js'
 import stationsJson from 'assets/stations_dresden.json'
-import { getSuggestedStations } from 'src/stores/search-history.js'
+import { getSuggestedIds, STATION_SEARCH_HISTORY_KEY } from 'src/stores/search-history.js'
+  
 
 let bookmarkedStations = ref([])
 let suggestedStations = ref([])
@@ -41,7 +42,7 @@ settingsFunctions.getBookmarkedStations().then(response => {
     bookmarkedStations.value.push({id: stationId, name: stationData[0].properties.name, abbreviation: stationData[0].properties.abbreviation})
   });
 })
-getSuggestedStations().then(response => {
+getSuggestedIds(STATION_SEARCH_HISTORY_KEY ).then(response => {
   response.forEach(stationId => {
     const stationData = stationsJson.features.filter(d => d.properties.id == stationId)
     suggestedStations.value.push({id: stationId, name: stationData[0].properties.name, abbreviation: stationData[0].properties.abbreviation})
