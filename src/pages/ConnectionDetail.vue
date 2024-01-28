@@ -34,7 +34,8 @@ import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
 import ConnectionEntry from 'components/ConnectionEntry.vue'
 import stationsJson from "assets/stations_dresden.json"
-import {settingsFunctions} from "stores/helperFunctions";
+import {dateFunctions, settingsFunctions} from "stores/helperFunctions";
+import {Preferences} from "@capacitor/preferences";
 
 const $q = useQuasar()
 const connectionData = ref(null)
@@ -87,7 +88,7 @@ function fetchConnections() {
     },
     // time: "2023-12-08T21:36:42.775Z"
   })
-    .then((response) => {
+    .then(async (response) => {
       if(response.data.Status.Code !== "Ok"){
         $q.notify({
           color: 'negative',
@@ -97,17 +98,43 @@ function fetchConnections() {
         })
       } else {
         connectionData.value = response.data.Routes
-        console.log(connectionData.value)
+
+        console.log(connectionData.value[connectionData.value.length-1].PartialRoutes[0].RegularStops[0].DepartureTime)
+
+        await Preferences.set({
+          key: connectionId + "_offline",
+          value: JSON.stringify({
+            "routes": response.data.Routes,
+            "name": response.data.Name,
+            "lastDeparture": connectionData.value[connectionData.value.length-1].PartialRoutes[0].RegularStops[0].DepartureTime
+          })
+        })
       }
       loading.value = false
     })
-    .catch(() => {
+    .catch(async () => {
+      const cachedData = await Preferences.get({key: connectionId + "_offline"})
+      const cachedConnections = JSON.parse(cachedData.value)
+
+      // only use cached data if it's still relevant
+      if (cachedConnections && dateFunctions.convertVVOToDate(cachedConnections.lastDeparture) > Date.now()) {
+        $q.notify({
+          color: 'info',
+          textColor: 'black',
+          message: 'Cached data used for connections',
+          caption: 'No current data could be fetched from the VVO API',
+          icon: 'download_for_offline'
+        })
+        connectionData.value = cachedConnections.routes
+      } else {
+        $q.notify({
+          color: 'negative',
+          message: 'An error occurred fetching data from the VVO API',
+          caption: 'No cached data was available for this connection',
+          icon: 'report_problem'
+        })
+      }
       loading.value = false
-      $q.notify({
-        color: 'negative',
-        message: 'An error occurred fetching data from the VVO API',
-        icon: 'report_problem'
-      })
     })
 }
 
