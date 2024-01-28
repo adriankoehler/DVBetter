@@ -8,17 +8,19 @@ import { Geolocation } from "@capacitor/geolocation";
  *   minutes: number,
  *   latitude?: number,
  *   longitude?: number,
- *   stationId: string,
+ *   id: string,
  * }} SearchHistoryEntry
  */
 
-const SEARCH_HISTORY_KEY = "searchHistory";
+export const STATION_SEARCH_HISTORY_KEY = "stationSearchHistory";
+export const CONNECTION_SEARCH_HISTORY_KEY = "connectionSearchHistory";
 
 /**
- * @param {string} stationId
+ * @param {string} key
+ * @param {string} id
  */
-export async function pushToSearchHistory(stationId) {
-  const searchHistory = await loadSearchHistory();
+export async function pushToSearchHistory(key, id) {
+  const searchHistory = await loadSearchHistory(key);
   let currentPosition = undefined;
   try {
     currentPosition = await Geolocation.getCurrentPosition();
@@ -32,18 +34,17 @@ export async function pushToSearchHistory(stationId) {
     minutes: now.getMinutes(),
     latitude: currentPosition?.coords.latitude,
     longitude: currentPosition?.coords.longitude,
-    stationId: stationId,
+    id,
   });
-  await saveSearchHistory(searchHistory);
+  await saveSearchHistory(key, searchHistory);
 }
 
 /**
+ * @param {string} key
  * @returns {Promise<SearchHistoryEntry[]>}
  */
-export async function loadSearchHistory() {
-  const result = await Preferences.get({
-    key: SEARCH_HISTORY_KEY,
-  });
+export async function loadSearchHistory(key) {
+  const result = await Preferences.get({ key });
   if (!result.value) {
     return [];
   } else {
@@ -52,20 +53,22 @@ export async function loadSearchHistory() {
 }
 
 /**
+ * @param {string} key
  * @param {SearchHistoryEntry[]} searchHistory
  */
-export async function saveSearchHistory(searchHistory) {
+export async function saveSearchHistory(key, searchHistory) {
   await Preferences.set({
-    key: SEARCH_HISTORY_KEY,
+    key,
     value: JSON.stringify(searchHistory),
   });
 }
 
 /**
+ * @param {string} key
  * @returns {Promise<string>}
  */
-export async function getSuggestedStations() {
-  const searchHistory = await loadSearchHistory();
+export async function getSuggestedIds(key) {
+  const searchHistory = await loadSearchHistory(key);
   const now = new Date();
   const currentDay = now.getDay();
   const currentHours = now.getHours();
@@ -117,58 +120,61 @@ export async function getSuggestedStations() {
     );
   });
 
-  let stationCounts = aggregateStationCounts(entriesHalfHour);
-  let stationCountsEntries = Object.entries(stationCounts);
-  if (stationCountsEntries.length > 0) {
-    stationCountsEntries.sort((a, b) => b[1] - a[1]);
-    return stationCountsEntries.map((entry) => entry[0]).slice(0, 5);
+  let counts = aggregateCounts(entriesHalfHour);
+  let countsEntries = Object.entries(counts);
+  if (countsEntries.length > 0) {
+    countsEntries.sort((a, b) => b[1] - a[1]);
+    return countsEntries.map((entry) => entry[0]).slice(0, 5);
   }
 
-  stationCounts = aggregateStationCounts(entriesThreeHours);
-  stationCountsEntries = Object.entries(stationCounts);
-  if (stationCountsEntries.length > 0) {
-    stationCountsEntries.sort((a, b) => b[1] - a[1]);
-    return stationCountsEntries.map((entry) => entry[0]).slice(0, 5);
+  counts = aggregateCounts(entriesThreeHours);
+  countsEntries = Object.entries(counts);
+  if (countsEntries.length > 0) {
+    countsEntries.sort((a, b) => b[1] - a[1]);
+    return countsEntries.map((entry) => entry[0]).slice(0, 5);
   }
 
-  stationCounts = aggregateStationCounts(entriesToday);
-  stationCountsEntries = Object.entries(stationCounts);
-  if (stationCountsEntries.length > 0) {
-    stationCountsEntries.sort((a, b) => b[1] - a[1]);
-    return stationCountsEntries.map((entry) => entry[0]).slice(0, 5);
+  counts = aggregateCounts(entriesToday);
+  countsEntries = Object.entries(counts);
+  if (countsEntries.length > 0) {
+    countsEntries.sort((a, b) => b[1] - a[1]);
+    return countsEntries.map((entry) => entry[0]).slice(0, 5);
   }
 
-  stationCounts = aggregateStationCounts(entriesThreeDays);
-  stationCountsEntries = Object.entries(stationCounts);
-  if (stationCountsEntries.length > 0) {
-    stationCountsEntries.sort((a, b) => b[1] - a[1]);
-    return stationCountsEntries.map((entry) => entry[0]).slice(0, 5);
+  counts = aggregateCounts(entriesThreeDays);
+  countsEntries = Object.entries(counts);
+  if (countsEntries.length > 0) {
+    countsEntries.sort((a, b) => b[1] - a[1]);
+    return countsEntries.map((entry) => entry[0]).slice(0, 5);
   }
 
-  stationCounts = aggregateStationCounts(entriesNearMe);
-  stationCountsEntries = Object.entries(stationCounts);
-  if (stationCountsEntries.length > 0) {
-    stationCountsEntries.sort((a, b) => b[1] - a[1]);
-    return stationCountsEntries.map((entry) => entry[0]).slice(0, 5);
+  counts = aggregateCounts(entriesNearMe);
+  countsEntries = Object.entries(counts);
+  if (countsEntries.length > 0) {
+    countsEntries.sort((a, b) => b[1] - a[1]);
+    return countsEntries.map((entry) => entry[0]).slice(0, 5);
   }
 
-  return [
-    "33000037", // Postplatz
-    "33000028", // Dresden Hauptbahnhof
-    "33000032", // Dresden Hauptbahnhof Nord
-    "33000016", // Dresden Neustadt
-    "33000001", // Dresden Mitte
-  ];
+  if (key === STATION_SEARCH_HISTORY_KEY) {
+    return [
+      "33000037", // Postplatz
+      "33000028", // Dresden Hauptbahnhof
+      "33000032", // Dresden Hauptbahnhof Nord
+      "33000016", // Dresden Neustadt
+      "33000001", // Dresden Mitte
+    ];
+  }
+  return [];
 }
 
-function aggregateStationCounts(entries) {
-  /** @type {{[stationId: string]: number}} */
-  const stationCounts = {};
+function aggregateCounts(entries) {
+  /** @type {{[id: string]: number}} */
+  const counts = {};
   for (const entry of entries) {
-    if (!stationCounts[entry.stationId]) {
-      stationCounts[entry.stationId] = 0;
+    if (!counts[entry.id]) {
+      counts[entry.id] = 0;
     }
-    stationCounts[entry.stationId]++;
+    counts[entry.id]++;
   }
-  return stationCounts;
+  return counts;
 }
