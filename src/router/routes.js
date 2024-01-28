@@ -1,4 +1,4 @@
-import { pushToSearchHistory } from "src/stores/search_history";
+import { pushToSearchHistory } from "src/stores/search-history.js";
 
 const Connections = import('pages/ConnectionsPage.vue')
 const ConnectionDetail = import('pages/ConnectionDetail.vue')
