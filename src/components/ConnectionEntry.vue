@@ -60,7 +60,6 @@ import { dateFunctions } from 'stores/helperFunctions.js'
 
 const connection = props.connection
 
-console.log(connection.PartialRoutes)
 
 const firstStop = connection.PartialRoutes[0].RegularStops[0]
 const startTimeRaw = firstStop.ArrivalRealTime ? firstStop.ArrivalRealTime : firstStop.ArrivalTime
@@ -98,13 +97,23 @@ motChainIcons = [].concat(...motChainIcons.map(n => [n, "horizontal_rule"])).sli
 let maxPartialRouteId = 0
 const partialRoutes = ref([])
 for (let i = 0; i < connection.PartialRoutes.length; i++) {
+  // exclude MobilityStairsDown and StayForConnection from connection details
+  if(connection.PartialRoutes[i].Mot.Type === "MobilityStairsDown" || connection.PartialRoutes[i].Mot.Type === "StayForConnection"){
+    break
+  }
+
   const stationOrPlace = connection.PartialRoutes[i].RegularStops ? connection.PartialRoutes[i].RegularStops[0].Name : connection.PartialRoutes[i-1].RegularStops[connection.PartialRoutes[i-1].RegularStops.length-1].Name
   const mot = connection.PartialRoutes[i].Mot.Type === "Footpath" ? "Footpath" : (connection.PartialRoutes[i].Mot.Name + " " + connection.PartialRoutes[i].Mot.Direction)
-  console.log(connection.PartialRoutes[i])
-  const motDetails = connection.PartialRoutes[i].Mot.Type === "Footpath" ? "" : (connection.PartialRoutes[i].RegularStops[0].Platform.Type + " " + connection.PartialRoutes[i].RegularStops[0].Platform.Name)
-  const motIcon = connection.PartialRoutes[i].Mot.Type === "Footpath" ? "" : "tram" // TODO function to return mot->matching icon
 
-  //FIXME connection.PartialRoutes[i].Mot.Type can be "MobilityStairsDown"
+  // if a station arrival is followed by a footpath, also get the platform the user arrived on
+  let motDetails
+  if (connection.PartialRoutes[i].Mot.Type === "Footpath" && connection.PartialRoutes[i-1] !== undefined && "RegularStops" in connection.PartialRoutes[i-1]){
+    const platformDetails = connection.PartialRoutes[i-1].RegularStops[connection.PartialRoutes[i-1].RegularStops.length-1].Platform
+    motDetails = platformDetails.Type + " " + platformDetails.Name
+  } else {
+    motDetails = connection.PartialRoutes[i].Mot.Type === "Footpath" ? "" : (connection.PartialRoutes[i].RegularStops[0].Platform.Type + " " + connection.PartialRoutes[i].RegularStops[0].Platform.Name)
+  }
+  const motIcon = connection.PartialRoutes[i].Mot.Type === "Footpath" ? "" : "tram" // TODO function to return mot->matching icon
 
   maxPartialRouteId = connection.PartialRoutes[i].PartialRouteId ?? 0
   partialRoutes.value.push({"Id": connection.PartialRoutes[i].PartialRouteId, "Duration": connection.PartialRoutes[i].Duration, "StationOrPlace": stationOrPlace, "Mot": mot, "MotDetails": motDetails, "MotIcon": motIcon})
