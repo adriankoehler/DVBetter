@@ -25,8 +25,8 @@
         <q-icon v-if="mot === 'Train'" name="directions_railway_filled" size="xs"/>
       </q-item-section>
       <q-item-section>
-        <span>{{ platform.Type === "Railtrack" ? "Gleis" : "Steig"}} {{ platform.Name }}</span>
-         <span v-if="occupancy && occupancy !== 'Unknown'">Auslastung {{ occupancy === "ManySeats" ? "gering" : "hoch"}}</span>
+        <span>{{ platform.Type }} {{ platform.Name }}</span>
+         <span v-if="occupancy && occupancy !== 'Unknown'">Occupancy {{ occupancy === "ManySeats" ? "low" : "high"}}</span>
       </q-item-section>
     </q-item>
 
@@ -40,7 +40,7 @@ import { dateFunctions } from 'stores/helperFunctions.js'
 const line = props.departure.LineName
 const direction = props.departure.Direction
 const mot = props.departure.Mot //Tram, CityBus, IntercityBus, SuburbanRailway, Train, PlusBus, ("Undefined")
-const delayed = props.departure.State == "Delayed" //daran vlt uhrzeitberechnung +- TODO
+const delayed = props.departure.State === "Delayed" //daran vlt uhrzeitberechnung +- TODO
 const rerouted = props.departure.RouteChanges.length != 0
 const cancelled = props.departure.CancelReasons.length != 0
 const occupancy = props.departure.Occupancy //icons: person, people, groups ("ManySeats, StandingOnly, Unknown")

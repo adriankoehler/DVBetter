@@ -40,7 +40,7 @@ export const dateFunctions = {
         let hh = Math.floor(diff / 1000 / 60 / 60);
 
         if (diff < 0 || mm == 0) {
-          return "jetzt"
+          return "now"
         } else if (hh == 0) {
           return mm + "min"
         } else {
