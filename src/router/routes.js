@@ -51,9 +51,9 @@ const routes = [
     component: () => import('pages/ErrorNotFound.vue')
   }
 ]
-async function logSearchHistory(to, _from) {
+function logSearchHistory(to, _from) {
   const stationId = to.params.stationId;
-  await pushToSearchHistory(stationId);
+  pushToSearchHistory(stationId);
 }
 
 export default routes
