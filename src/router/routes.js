@@ -22,12 +22,12 @@ const routes = [
           {
             path: '',
             name: 'connections',
-            component: Connections,
+            component: () => Connections,
           },
           {
             path: ':connectionId',
             name: 'connectionDetail',
-            component: ConnectionDetail,
+            component: () => ConnectionDetail,
             beforeEnter: logConnectionSearchHistory,
           },
         ],
@@ -38,12 +38,12 @@ const routes = [
           {
             path: '',
             name: 'stations',
-            component: Stations,
+            component: () => Stations,
           },
           {
             path: ':stationId',
             name: 'stationDetail',
-            component: StationDetail,
+            component: () => StationDetail,
             beforeEnter: logStationSearchHistory,
           },
         ],
@@ -58,6 +58,7 @@ const routes = [
     component: () => import('pages/ErrorNotFound.vue'),
   },
 ];
+
 function logStationSearchHistory(to, _from) {
   const stationId = to.params.stationId;
   pushToSearchHistory(STATION_SEARCH_HISTORY_KEY, stationId);
