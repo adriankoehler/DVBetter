@@ -14,6 +14,7 @@
       />
 
       <h2>Suggestions</h2>
+      <q-skeleton v-show="suggestionsLoading" height="53px" />
       <list-entry
         v-for="entry in suggestedConnections"
         :name="entry.stations[0].name"
@@ -39,8 +40,9 @@ import { settingsFunctions } from 'stores/helperFunctions.js'
 import stationsJson from 'assets/stations_dresden.json'
 import { getSuggestedIds, CONNECTION_SEARCH_HISTORY_KEY } from 'src/stores/search-history.js'
 
-let bookmarkedConnections = ref([])
-let suggestedConnections = ref([])
+const bookmarkedConnections = ref([])
+const suggestedConnections = ref([])
+const suggestionsLoading = ref(true)
 
 settingsFunctions.getBookmarkedConnections().then(response => {
   // TODOLATER clean up this mess (+what if no station match)
@@ -55,6 +57,8 @@ settingsFunctions.getBookmarkedConnections().then(response => {
   })
 })
 getSuggestedIds(CONNECTION_SEARCH_HISTORY_KEY).then(response => {
+  suggestionsLoading.value = false
+  
   // TODOLATER clean up this mess (+what if no station match)
   response.forEach(connectionId => {
     const stationMatches = connectionId.match(/^(\d{8})-(\d{8})$/)
