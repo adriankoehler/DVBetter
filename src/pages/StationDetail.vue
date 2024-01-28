@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="content-wrapper no-x-padding">
-      <q-pull-to-refresh @refresh="refresh">
+<!--      <q-pull-to-refresh @refresh="refresh">-->
         <div class="row no-wrap">
           <h2 class="q-pl-std">
             <span v-if="stationAbbreviation" class="text-weight-bold">{{ stationAbbreviation }} | </span>
@@ -15,7 +15,7 @@
           :departure="departureEntry"
           :key="departureEntry.Id + forceRefreshId"
         />
-      </q-pull-to-refresh>
+<!--      </q-pull-to-refresh>-->
     </div>
 
     <expandable-map :station="stationId"/>
