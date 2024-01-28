@@ -58,7 +58,7 @@ settingsFunctions.getBookmarkedConnections().then(response => {
 })
 getSuggestedIds(CONNECTION_SEARCH_HISTORY_KEY).then(response => {
   suggestionsLoading.value = false
-  
+
   // TODOLATER clean up this mess (+what if no station match)
   response.forEach(connectionId => {
     const stationMatches = connectionId.match(/^(\d{8})-(\d{8})$/)

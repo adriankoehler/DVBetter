@@ -99,8 +99,6 @@ function fetchConnections() {
       } else {
         connectionData.value = response.data.Routes
 
-        console.log(connectionData.value[connectionData.value.length-1].PartialRoutes[0].RegularStops[0].DepartureTime)
-
         await Preferences.set({
           key: connectionId + "_offline",
           value: JSON.stringify({

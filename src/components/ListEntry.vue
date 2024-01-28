@@ -11,6 +11,7 @@
   <!-- connection A→B -->
   <div v-else class="entry bg-grey-3 q-py-md q-px-lg rounded-borders cursor-pointer row" @click="$router.push('/connections/' + props.stationId + '-' + props.stationId2)">
     <!-- FIXME should not grow to avoid arrow not lining up -->
+    <!-- TODO fix width to be calc 50%-some px icon width -->
     <span class="col-grow">
       <span v-if="props.abbreviation"><b>{{ props.abbreviation }}</b> | </span>
       <span>{{ props.name }}</span>
