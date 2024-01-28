@@ -73,7 +73,7 @@ export async function getSuggestedStations() {
 
   let entriesNearMe = searchHistory;
   try {
-    currentPosition = await Geolocation.getCurrentPosition();
+    let currentPosition = await Geolocation.getCurrentPosition();
     entriesNearMe = searchHistory.filter((entry) => {
       if (!entry.latitude || !entry.longitude) {
         return false;
