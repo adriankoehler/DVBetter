@@ -34,16 +34,14 @@
           :key="partialRoute.Id"
         >
           <template v-slot:subtitle>
-<!--            Name(/Ort) von Startpunkt oder Zwischenstation oder Endstation-->
-            {{partialRoute.StationOrPlace}}
+            {{partialRoute.StationOrPlace}} <!-- name of startpoint/intermediate stop/endpoint-->
           </template>
           <template v-slot:title>
-<!--            Zusatzinfo (Steig usw.)-->
-            {{partialRoute.MotDetails}}
+            {{partialRoute.MotDetails}} <!-- platform, if available-->
           </template>
           <div class="subconnection-details">
-            {{partialRoute.Mot}}
-<!--            zu nehmende Linie (dazu vlt noch zusatzinfo?) oder Fußweg (TODO mit Zeit)-->
+            <q-icon v-if="partialRoute.Mot" :name="partialRoute.MotIcon"/>
+            {{partialRoute.Mot}} <!-- mot, f.e. "Footpath", "64 Reick",.. -->
           </div>
         </q-timeline-entry>
       </q-timeline>
@@ -56,7 +54,7 @@
 import {ref} from "vue";
 
 const props = defineProps(['connection'])
-import { dateFunctions } from 'stores/helperFunctions.js'
+import { dateFunctions, miscFunctions } from 'stores/helperFunctions.js'
 
 const connection = props.connection
 
@@ -73,20 +71,7 @@ const duration = ref(connection.Duration + " min")
 const interchanges = ref(connection.Interchanges)
 
 let motChainIcons = connection.MotChain.map((mot) => {
-  if (mot.Type === "Footpath") {
-    return "directions_walk"
-  } else if (mot.Type === "Tram") {
-    return "tram"
-  } else if (mot.Type === "CityBus" || mot.Type === "Bus") {
-    return "directions_bus"
-  } else if (mot.Type === "IntercityBus" || mot.Type === "PlusBus") {
-    return "directions_bus_filled"
-  } else if (mot.Type === "SuburbanRailway") {
-    return "directions_railway"
-  } else if (mot.Type === "Train") {
-    return "directions_railway_filled"
-  }
-  return "help_center" // unknown mot
+  return miscFunctions.getIconFromMot(mot)
 })
 // insert a spacer icon between each element
 motChainIcons = [].concat(...motChainIcons.map(n => [n, "horizontal_rule"])).slice(0, -1)
@@ -113,7 +98,7 @@ for (let i = 0; i < connection.PartialRoutes.length; i++) {
   } else {
     motDetails = connection.PartialRoutes[i].Mot.Type === "Footpath" ? "" : (connection.PartialRoutes[i].RegularStops[0].Platform.Type + " " + connection.PartialRoutes[i].RegularStops[0].Platform.Name)
   }
-  const motIcon = connection.PartialRoutes[i].Mot.Type === "Footpath" ? "" : "tram" // TODO function to return mot->matching icon
+  const motIcon = miscFunctions.getIconFromMot(connection.PartialRoutes[i].Mot)
 
   maxPartialRouteId = connection.PartialRoutes[i].PartialRouteId ?? 0
   partialRoutes.value.push({"Id": connection.PartialRoutes[i].PartialRouteId, "Duration": connection.PartialRoutes[i].Duration, "StationOrPlace": stationOrPlace, "Mot": mot, "MotDetails": motDetails, "MotIcon": motIcon})
@@ -179,7 +164,7 @@ partialRoutes.value.push({"Id": maxPartialRouteId+1, "Duration": lastPartialRout
 
 .q-timeline.sub-connections {
   .q-timeline__subtitle {
-    // startpunkt/haltestelle
+    // startpoint/station
     font-size: 1.05em;
     //font-weight: normal;
 
@@ -192,7 +177,7 @@ partialRoutes.value.push({"Id": maxPartialRouteId+1, "Duration": lastPartialRout
   .q-timeline__content {
     padding-bottom: 16px;
 
-    // steig für haltestelle
+    // platform for station
     .q-timeline__title {
       font-size: 1em;
       line-height: 1em;
@@ -200,9 +185,11 @@ partialRoutes.value.push({"Id": maxPartialRouteId+1, "Duration": lastPartialRout
       opacity: 0.6;
     }
 
-    // verbindung
+    // connection
     .subconnection-details {
-
+      color: #4e54ff;
+      font-weight: 500;
+      margin-left: 15px;
     }
   }
 }

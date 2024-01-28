@@ -125,6 +125,7 @@ export const settingsFunctions = {
     return bookmarkedStations
   },
 
+  // iterates through all connections in the preferences and returns an array of all connection-IDs that are currently bookmarked (value: true)
   getBookmarkedConnections: async () => {
     const keys = await Preferences.keys()
     const connections = keys.keys.filter(key => key.match(/^\d{8}-\d{8}$/))
@@ -138,5 +139,25 @@ export const settingsFunctions = {
     }
 
     return bookmarkedConnections
+  }
+}
+
+export const miscFunctions = {
+  // returns the corresponding icon of an mot type
+  getIconFromMot: (mot) => {
+    if (mot.Type === "Footpath") {
+      return "directions_walk"
+    } else if (mot.Type === "Tram") {
+      return "tram"
+    } else if (mot.Type === "CityBus" || mot.Type === "Bus") {
+      return "directions_bus"
+    } else if (mot.Type === "IntercityBus" || mot.Type === "PlusBus") {
+      return "directions_bus_filled"
+    } else if (mot.Type === "SuburbanRailway") {
+      return "directions_railway"
+    } else if (mot.Type === "Train") {
+      return "directions_railway_filled"
+    }
+    return "help_center" // unknown mot
   }
 }
