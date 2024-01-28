@@ -166,7 +166,7 @@ partialRoutes.value.push({"Id": maxPartialRouteId+1, "Duration": lastPartialRout
 .q-expansion-item--expanded {
   .connection-entry-header {
     background: $primary-10;
-    color: $primary;
+    //color: $primary;
     //font-weight: bold;
   }
 

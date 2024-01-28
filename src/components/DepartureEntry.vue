@@ -85,8 +85,7 @@ const alreadyLeft = arrivalDateReal ? arrivalDateReal < Date.now() : arrivalDate
 .q-expansion-item--expanded {
   .departure-entry-header {
     background: $primary-10;
-    // background: #DDA85633;
-    color: $primary;
+    //color: $primary;
     font-weight: bold;
   }
 
