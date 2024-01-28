@@ -61,13 +61,10 @@ defineExpose({
 });
 
 async function getPosition() {
-  // const coordinates = await Geolocation.getCurrentPosition()
-  const coordinates = {"coords": {"longitude": 13.737389107414138, "latitude": 51.053956030891435}} // dummy coordinates in central dresden (theaterplatz)
-  // console.log('Current position:', coordinates.coords.latitude, coordinates.coords.longitude)
+  const coordinates = await Geolocation.getCurrentPosition()
+  // const coordinates = {"coords": {"longitude": 13.737389107414138, "latitude": 51.053956030891435}} // dummy coordinates in central dresden (theaterplatz)
 
   const convertedCoordinates = await geoFunctions.convertCoordinates_WGS84_GK4( coordinates.coords.longitude, coordinates.coords.latitude)
-  // console.log('Converted GK4 position:', convertedCoordinates[0], convertedCoordinates[1])
-
   const searchQuery = "coord:"+convertedCoordinates[0]+":"+convertedCoordinates[1]
 
   api.post('tr/pointfinder', {
