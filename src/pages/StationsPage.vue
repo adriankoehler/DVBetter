@@ -13,7 +13,7 @@
       <h2>Suggestions</h2>
       <list-entry
         v-for="entry in suggestedStations"
-        :name="entry"
+        :name="entry.name"
         :abbreviation="entry.abbreviation"
         :stationId="entry.id"
         :key="entry.id"
