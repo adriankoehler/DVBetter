@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="content-wrapper no-x-padding">
-      <div class="row">
+      <div class="row no-wrap">
         <h2 class="q-pl-std">
           <span> {{ stationNameOrigin }}</span>
           <span v-if="stationAbbreviationOrigin"> ({{ stationAbbreviationOrigin }})</span>

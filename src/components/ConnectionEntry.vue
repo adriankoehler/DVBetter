@@ -4,12 +4,13 @@
     expand-icon-class="expand-departure-icon"
     hide-expand-icon
   >
+    <!--  quick overview of connection  -->
     <template v-slot:header>
       <q-item-section avatar>
-        <span class="text-weight-bold">ab {{ startTime }} </span>
-        <span v-if="interchanges === 0"> kein Umstieg</span>
-        <span v-else-if="interchanges === 1"> 1 Umstieg</span>
-        <span v-else-if="interchanges > 1"> {{ interchanges }} Umstiege</span>
+        <span class="text-weight-bold">from {{ startTime }} </span>
+        <span v-if="interchanges === 0"> no interchange</span>
+        <span v-else-if="interchanges === 1"> 1 interchange</span>
+        <span v-else-if="interchanges > 1"> {{ interchanges }} interchanges</span>
       </q-item-section>
       <q-item-section class="mot-icons">
         <q-icon
@@ -20,13 +21,32 @@
         />
       </q-item-section>
       <q-item-section side>
-        <span class="text-weight-bold">an {{ arrivalTime }} </span><br>
+        <span class="text-weight-bold">arrives {{ arrivalTime }} </span><br>
         <span>{{ duration }}</span>
       </q-item-section>
     </template>
 
     <q-item class="q-px-std q-py-sm connection-entry-content text-caption">
       <!--  detailed view of connection  -->
+      <q-timeline color="secondary" class="sub-connections">
+        <q-timeline-entry
+          v-for="partialRoute in partialRoutes"
+          :key="partialRoute.Id"
+        >
+          <template v-slot:subtitle>
+<!--            Name(/Ort) von Startpunkt oder Zwischenstation oder Endstation-->
+            {{partialRoute.StationOrPlace}}
+          </template>
+          <template v-slot:title>
+<!--            Zusatzinfo (Steig usw.)-->
+            {{partialRoute.MotDetails}}
+          </template>
+          <div class="subconnection-details">
+            {{partialRoute.Mot}}
+<!--            zu nehmende Linie (dazu vlt noch zusatzinfo?) oder Fußweg (TODO mit Zeit)-->
+          </div>
+        </q-timeline-entry>
+      </q-timeline>
     </q-item>
 
   </q-expansion-item>
@@ -38,20 +58,22 @@ import {ref} from "vue";
 const props = defineProps(['connection'])
 import { dateFunctions } from 'stores/helperFunctions.js'
 
-// console.log(props.connection)
+const connection = props.connection
 
-const firstStop = props.connection.PartialRoutes[0].RegularStops[0]
+console.log(connection.PartialRoutes)
+
+const firstStop = connection.PartialRoutes[0].RegularStops[0]
 const startTimeRaw = firstStop.ArrivalRealTime ? firstStop.ArrivalRealTime : firstStop.ArrivalTime
 const startTime = ref(dateFunctions.getTimeFormatted(dateFunctions.convertVVOToDate(startTimeRaw)))
 
-const lastStop = props.connection.PartialRoutes[props.connection.PartialRoutes.length-1].RegularStops[props.connection.PartialRoutes[props.connection.PartialRoutes.length-1].RegularStops.length-1]
+const lastStop = connection.PartialRoutes[connection.PartialRoutes.length-1].RegularStops[connection.PartialRoutes[connection.PartialRoutes.length-1].RegularStops.length-1]
 const arrivalTimeRaw = lastStop.ArrivalRealTime ? lastStop.ArrivalRealTime : lastStop.ArrivalTime
 const arrivalTime = ref(dateFunctions.getTimeFormatted(dateFunctions.convertVVOToDate(arrivalTimeRaw)))
 
-const duration = ref(props.connection.Duration + " min")
-const interchanges = ref(props.connection.Interchanges)
+const duration = ref(connection.Duration + " min")
+const interchanges = ref(connection.Interchanges)
 
-let motChainIcons = props.connection.MotChain.map((mot) => {
+let motChainIcons = connection.MotChain.map((mot) => {
   if (mot.Type === "Footpath") {
     return "directions_walk"
   } else if (mot.Type === "Tram") {
@@ -69,7 +91,30 @@ let motChainIcons = props.connection.MotChain.map((mot) => {
 })
 // insert a spacer icon between each element
 motChainIcons = [].concat(...motChainIcons.map(n => [n, "horizontal_rule"])).slice(0, -1)
-// TODO add detailed connection view
+
+
+// ----- trip details (sub-connections/partial routes) -------
+// add startpoint and sub-connections of trip
+let maxPartialRouteId = 0
+const partialRoutes = ref([])
+for (let i = 0; i < connection.PartialRoutes.length; i++) {
+  const stationOrPlace = connection.PartialRoutes[i].RegularStops ? connection.PartialRoutes[i].RegularStops[0].Name : connection.PartialRoutes[i-1].RegularStops[connection.PartialRoutes[i-1].RegularStops.length-1].Name
+  const mot = connection.PartialRoutes[i].Mot.Type === "Footpath" ? "Footpath" : (connection.PartialRoutes[i].Mot.Name + " " + connection.PartialRoutes[i].Mot.Direction)
+  console.log(connection.PartialRoutes[i])
+  const motDetails = connection.PartialRoutes[i].Mot.Type === "Footpath" ? "" : (connection.PartialRoutes[i].RegularStops[0].Platform.Type + " " + connection.PartialRoutes[i].RegularStops[0].Platform.Name)
+  const motIcon = connection.PartialRoutes[i].Mot.Type === "Footpath" ? "" : "tram" // TODO function to return mot->matching icon
+
+  //FIXME connection.PartialRoutes[i].Mot.Type can be "MobilityStairsDown"
+
+  maxPartialRouteId = connection.PartialRoutes[i].PartialRouteId ?? 0
+  partialRoutes.value.push({"Id": connection.PartialRoutes[i].PartialRouteId, "Duration": connection.PartialRoutes[i].Duration, "StationOrPlace": stationOrPlace, "Mot": mot, "MotDetails": motDetails, "MotIcon": motIcon})
+}
+
+// add endpoint of trip
+const lastPartialRoute = connection.PartialRoutes[connection.PartialRoutes.length-1]
+const stationOrPlace = lastPartialRoute.RegularStops ? lastPartialRoute.RegularStops[lastPartialRoute.RegularStops.length-1].Name : "Footpath asd"
+const motIcon = lastPartialRoute.Mot.Type === "Footpath" ? false : "tram" // TODO function to return mot->matching icon + actually add icon
+partialRoutes.value.push({"Id": maxPartialRouteId+1, "Duration": lastPartialRoute.Duration, "StationOrPlace": stationOrPlace, "Mot": "", "MotDetails": "", "MotIcon": motIcon})
 
 // TODOLATER if cancelled/rerouted=true -> fetch all route changes and get the reason
 </script>
@@ -88,11 +133,12 @@ motChainIcons = [].concat(...motChainIcons.map(n => [n, "horizontal_rule"])).sli
   }
 
   .q-item__section--avatar {
-    width: 100px; // fix left side width so centered text is the same for every entry
+    width: 109px; // fix left side width so centered text is the same for every entry
   }
 
   .q-item__section--main {
     text-align: center;
+    color: #7a7a7a;
 
     &.mot-icons {
       flex-direction: row;
@@ -111,15 +157,44 @@ motChainIcons = [].concat(...motChainIcons.map(n => [n, "horizontal_rule"])).sli
 .q-expansion-item--expanded {
   .connection-entry-header {
     background: $primary-10;
-    // background: #DDA85633;
     color: $primary;
-    font-weight: bold;
+    //font-weight: bold;
   }
 
   .connection-entry-content {
     background-color: $primary-05;
     color: $primary-dark;
     font-size: 0.8rem;
+  }
+}
+
+.q-timeline.sub-connections {
+  .q-timeline__subtitle {
+    // startpunkt/haltestelle
+    font-size: 1.05em;
+    //font-weight: normal;
+
+    opacity: 1;
+    text-transform: initial;
+    letter-spacing: initial;
+    margin-bottom: 2px;
+  }
+
+  .q-timeline__content {
+    padding-bottom: 16px;
+
+    // steig für haltestelle
+    .q-timeline__title {
+      font-size: 1em;
+      line-height: 1em;
+      //font-weight: normal;
+      opacity: 0.6;
+    }
+
+    // verbindung
+    .subconnection-details {
+
+    }
   }
 }
 </style>
