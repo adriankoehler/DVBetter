@@ -9,8 +9,16 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router"
+import { useRouter } from 'vue-router'
+import { Preferences } from '@capacitor/preferences'
 
-//TODO could be a user setting
-useRouter().push({ path: '/stations' })
+const router = useRouter()
+
+Preferences.get({ key: 'startScreen' }).then(response => {
+  router.push({path: '/'+response.value});
+})
+.catch(() => {
+  console.log("no startpage set; using default..")
+  useRouter().push({ path: '/stations' })
+})
 </script>

@@ -2,28 +2,37 @@
   <q-page>
     <div class="content-wrapper">
       <h2>Settings</h2>
-      <q-btn @click="setObject">set</q-btn>
-      <q-btn @click="getObject">get</q-btn>
+      <p>Start page when you open the app (default: stations)</p>
+      <q-btn-toggle
+        v-model="startPageModel"
+        @update:model-value="setStartpage()"
+        toggle-color="primary"
+        :options="[
+          {label: 'Stations', value: 'stations'},
+          {label: 'Connections', value: 'connections'},
+        ]"
+      />
+<!--      <q-btn @click="getStartpage">get</q-btn>-->
     </div>
   </q-page>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { Preferences } from '@capacitor/preferences';
 
-async function setObject() {
+const startPageModel = ref("stations")
+getStartpage().then((response) => startPageModel.value = response)
+
+async function setStartpage() {
   await Preferences.set({
-    key: 'user',
-    value: JSON.stringify({
-      id: 1,
-      name: 'Joseph'
-    })
+    key: 'startScreen',
+    value: startPageModel.value
   })
 }
 
-async function getObject() {
-  const ret = await Preferences.get({ key: 'user' })
-  const user = JSON.parse(ret.value)
-  console.log(user)
+async function getStartpage() {
+  const startPage = await Preferences.get({ key: 'startScreen' })
+  return startPage.value
 }
 </script>
