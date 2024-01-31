@@ -4,7 +4,7 @@
     filled
     color="grey-10"
     bg-color="grey-2"
-    label="Search for station"
+    :label="props.type === 'departures' ? 'Search for station' : 'Search for station or address'"
     clearable
 
     v-model="searchText"
@@ -42,15 +42,12 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { Geolocation } from '@capacitor/geolocation';
 import { geoFunctions } from 'stores/helperFunctions.js'
 import { api } from 'boot/axios'
 
 const $q = useQuasar()
-const router = useRouter()
-
 const props = defineProps(['type'])
 const options = ref([])
 const stationSelect = ref(null)
@@ -129,7 +126,7 @@ function filterFn (val, update, abort) {
     api.post('tr/pointfinder', {
       query: searchTerm,
       limit: 10,
-      stopsOnly: true,
+      stopsOnly: props.type === "departures",
       regionalOnly: true,
       stopShortcuts: true
     })
@@ -143,12 +140,17 @@ function filterFn (val, update, abort) {
           })
         } else {
           const foundPoints = response.data.Points
-          const regex = /(\d{8})\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
+          console.log(foundPoints)
+          let regex = /(\d{8})\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/
+          if (props.type == "connections") {
+            // this regex will include address matches
+            regex = /(\d{8}|^streetID:.*|$|^poiID:.*|$)\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
+          }
           foundPoints.forEach((point) => {
             const match = point.match(regex)
             if (match[1] && match[2]) {
               const stopId = match[1]
-              const stopName = match[2]
+              const stopName = match[2] //TODO das haut ggf nicht mehr hin bei street
               const stopAbbreviation = match[3]
               options.value.push({id: stopId, name: stopName, abbreviation: stopAbbreviation})
             }
