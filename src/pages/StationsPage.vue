@@ -9,6 +9,7 @@
         :stationId="entry.id"
         :key="entry.id"
       />
+      <p v-if="bookmarkedStations.length < 1" class="text-grey-6">(none)</p>
 
       <h2>Suggestions</h2>
       <q-skeleton v-show="suggestionsLoading" height="53px" />
@@ -19,6 +20,7 @@
         :stationId="entry.id"
         :key="entry.id"
       />
+      <p v-if="suggestedStations.length < 1 && !suggestionsLoading" class="text-grey-6">(none)</p>
     </div>
 
     <search-area type="departures" />

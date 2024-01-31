@@ -12,6 +12,7 @@
         :stationId2="entry.stations[1].id"
         :key="entry.connectionId"
       />
+      <p v-if="bookmarkedConnections.length < 1" class="text-grey-6">(none)</p>
 
       <h2>Suggestions</h2>
       <q-skeleton v-show="suggestionsLoading" height="53px" />
@@ -25,6 +26,7 @@
         :stationId2="entry.stations[1].id"
         :key="entry.connectionId"
       />
+      <p v-if="suggestedConnections.length < 1 && !suggestionsLoading" class="text-grey-6">(none)</p>
     </div>
 
     <search-area type="connections" />
