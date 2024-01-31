@@ -61,15 +61,17 @@ settingsFunctions.getBookmarkedConnections().then(response => {
 getSuggestedIds(CONNECTION_SEARCH_HISTORY_KEY).then(response => {
   suggestionsLoading.value = false
 
-  // TODOLATER clean up this mess (+what if no station match)
   response.forEach(connectionId => {
+    // TODO should also include street/point ids now that connections support it
     const stationMatches = connectionId.match(/^(\d{8})-(\d{8})$/)
-    const stationData1 = stationsJson.features.filter(d => d.properties.id === stationMatches[1])
-    const stationData2 = stationsJson.features.filter(d => d.properties.id === stationMatches[2])
-    suggestedConnections.value.push({connectionId: connectionId, stations: [
-      {id: stationData1[0].properties.id, name: stationData1[0].properties.name, abbreviation: stationData1[0].properties.abbreviation},
-      {id: stationData2[0].properties.id, name: stationData2[0].properties.name, abbreviation: stationData2[0].properties.abbreviation}
-    ]})
+    if (stationMatches && stationMatches.length > 2) {
+      const stationData1 = stationsJson.features.filter(d => d.properties.id === stationMatches[1])
+      const stationData2 = stationsJson.features.filter(d => d.properties.id === stationMatches[2])
+      suggestedConnections.value.push({connectionId: connectionId, stations: [
+        {id: stationData1[0].properties.id, name: stationData1[0].properties.name, abbreviation: stationData1[0].properties.abbreviation},
+        {id: stationData2[0].properties.id, name: stationData2[0].properties.name, abbreviation: stationData2[0].properties.abbreviation}
+      ]})
+    }
   })
 })
 </script>
