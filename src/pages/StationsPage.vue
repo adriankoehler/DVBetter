@@ -50,6 +50,8 @@ getSuggestedIds(STATION_SEARCH_HISTORY_KEY ).then(response => {
   suggestionsLoading.value = false
   response.forEach(stationId => {
     const stationData = stationsJson.features.filter(d => d.properties.id == stationId)
+    console.log(stationData)
+    // FIXME stationData[0] is undefined (when data could be found in stationsJson)
     suggestedStations.value.push({id: stationId, name: stationData[0].properties.name, abbreviation: stationData[0].properties.abbreviation})
   });
 })

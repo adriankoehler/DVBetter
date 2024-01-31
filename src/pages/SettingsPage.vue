@@ -12,6 +12,7 @@
           {label: 'Connections', value: 'connections'},
         ]"
       />
+      <!-- TODO walking speed -->
 <!--      <q-btn @click="getStartpage">get</q-btn>-->
     </div>
   </q-page>
