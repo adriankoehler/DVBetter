@@ -15,10 +15,11 @@ import { Preferences } from '@capacitor/preferences'
 const router = useRouter()
 
 Preferences.get({ key: 'startScreen' }).then(response => {
-  router.push({path: '/'+response.value});
-})
-.catch(() => {
-  console.log("no startpage set; using default..")
-  useRouter().push({ path: '/stations' })
+  if(response.value === "stations" || response.value === "connections")
+    router.push({path: '/'+response.value});
+  else {
+    console.log("no startpage set; using default..")
+    router.push({ path: '/stations' })
+  }
 })
 </script>

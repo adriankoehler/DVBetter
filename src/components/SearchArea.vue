@@ -1,7 +1,7 @@
 <template>
   <div class="search-field self-end">
-    <search-field ref="station1"/>
-    <search-field ref="station2" v-if="type==='connections'"/>
+    <search-field ref="station1" :type="type"/>
+    <search-field ref="station2" v-if="type==='connections'" :type="type"/>
 
     <q-btn v-if="type==='departures'" @click="findDepartures" color="primary" label="Find departures" no-caps/>
     <q-btn v-else @click="findConnections" color="primary" label="Find connections" no-caps/>

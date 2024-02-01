@@ -9,6 +9,7 @@
         :stationId="entry.id"
         :key="entry.id"
       />
+      <p v-if="bookmarkedStations.length < 1" class="text-grey-6">(none)</p>
 
       <h2>Suggestions</h2>
       <q-skeleton v-show="suggestionsLoading" height="53px" />
@@ -19,6 +20,7 @@
         :stationId="entry.id"
         :key="entry.id"
       />
+      <p v-if="suggestedStations.length < 1 && !suggestionsLoading" class="text-grey-6">(none)</p>
     </div>
 
     <search-area type="departures" />
@@ -48,6 +50,8 @@ getSuggestedIds(STATION_SEARCH_HISTORY_KEY ).then(response => {
   suggestionsLoading.value = false
   response.forEach(stationId => {
     const stationData = stationsJson.features.filter(d => d.properties.id == stationId)
+    console.log(stationData)
+    // FIXME stationData[0] is undefined (when data could be found in stationsJson)
     suggestedStations.value.push({id: stationId, name: stationData[0].properties.name, abbreviation: stationData[0].properties.abbreviation})
   });
 })
