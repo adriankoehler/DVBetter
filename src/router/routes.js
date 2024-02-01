@@ -21,6 +21,11 @@ const routes = [
         component: () => import('pages/SettingsPage.vue')
       },
       {
+        path: 'bookmarks',
+        name: 'bookmarks',
+        component: () => import('pages/BookmarksPage.vue')
+      },
+      {
         path: 'connections/:connectionId?',
         children: [
           {
