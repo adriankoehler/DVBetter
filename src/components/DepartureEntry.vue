@@ -6,14 +6,14 @@
   >
 
     <template v-slot:header>
-      <q-item-section avatar> {{ line }}              </q-item-section>
+      <q-item-section avatar> {{ line }} </q-item-section>
       <q-item-section>
         <span>{{ direction }}
           <q-icon v-if="cancelled" class="on-right" name="cancel" size="xs"/>
           <q-icon v-else-if="rerouted" class="on-right rotate-90" name="turn_sharp_left" size="xs"/>
         </span>
       </q-item-section>
-      <q-item-section side>   {{ arrivalTimeString }} </q-item-section>
+      <q-item-section side> {{ arrivalTimeString }} </q-item-section>
     </template>
 
     <q-item class="q-px-std q-py-sm departure-entry-content text-caption">
@@ -26,7 +26,7 @@
       </q-item-section>
       <q-item-section>
         <span>{{ platform.Type }} {{ platform.Name }}</span>
-         <span v-if="occupancy && occupancy !== 'Unknown'">Occupancy {{ occupancy === "ManySeats" ? "low" : "high"}}</span>
+         <span v-if="occupancy && occupancy !== 'Unknown'">{{ occupancy === "ManySeats" ? "Low" : "High"}} occupancy</span>
       </q-item-section>
     </q-item>
 
