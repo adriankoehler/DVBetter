@@ -153,7 +153,7 @@ export const miscFunctions = {
       return "directions_bus"
     } else if (mot.Type === "IntercityBus" || mot.Type === "PlusBus") {
       return "directions_bus_filled"
-    } else if (mot.Type === "SuburbanRailway") {
+    } else if (mot.Type === "SuburbanRailway" || mot.Type === "RapidTransit") {
       return "directions_railway"
     } else if (mot.Type === "Train") {
       return "directions_railway_filled"
