@@ -30,11 +30,11 @@
 <script setup>
 import { ref } from 'vue'
 import { useRoute } from "vue-router"
-import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
+import { api } from 'boot/axios'
+import { dateFunctions, settingsFunctions } from "stores/helperFunctions";
+import { Preferences } from "@capacitor/preferences";
 import ConnectionEntry from 'components/ConnectionEntry.vue'
-import {dateFunctions, settingsFunctions} from "stores/helperFunctions";
-import {Preferences} from "@capacitor/preferences";
 
 const $q = useQuasar()
 const connectionData = ref(null)
@@ -151,7 +151,6 @@ async function getPointInfo (stationOrPointID) {
       caption: response.data.Status.Message,
       icon: 'report_problem'
     })
-    return ["/", ""] // in case of error, still return something (but "/" as name and no abbr.)
   } else {
     const foundPoints = response.data.Points
     const regex = /(?:\d{8}|^streetID:.*|$|^poiID:.*|$)\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
@@ -162,8 +161,16 @@ async function getPointInfo (stationOrPointID) {
       const name = match[1]
       const abbreviation = match[2] ?? ""
       return [name, abbreviation]
+    } else {
+      $q.notify({
+      color: 'negative',
+      message: 'An error occurred',
+      caption: 'A point was returned but a name could not be fetched from the return value',
+      icon: 'report_problem'
+    })
     }
   }
+  return ["/", ""] // in case of error, still return something (but "/" as name and no abbr.)
 }
 
 if (connectionId) {
