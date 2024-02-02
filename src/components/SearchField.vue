@@ -67,7 +67,7 @@ async function getPosition() {
   api.post('tr/pointfinder', {
     query: searchQuery,
     limit: 10,
-    assignedstops: true
+    assignedstops: true // if true ALSO returns stops that are nearby
   })
     .then((response) => {
       if(response.data.Status.Code !== "Ok" || response.data.PointStatus !== "Identified"){
@@ -80,13 +80,18 @@ async function getPosition() {
       } else {
         options.value = [] // clear any previous searches
         const foundPoints = response.data.Points
-        const regex = /(\d{8})\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
+        let regex = /(\d{8})\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/
+        if (props.type === "connections") {
+          // this regex will include address matches
+          regex = /(?:(\d{8})\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?)|(?:(coord:.*)\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|)/;
+        }
         foundPoints.forEach((point, i) => {
           const match = point.match(regex)
           if (match) {
-            const stopId = match[1]
-            const stopName = match[2]
-            const stopAbbreviation = match[3]
+            // match 1-3 belong to stations | matches 4-5 belong to addresses
+            const stopId = match[1] ?? match[4] // if match is an address, its the 4th regex match
+            const stopName = match[2] ?? match [5] // if match is an address, its the 5th regex match
+            const stopAbbreviation = match[3] // only stations have abbreviations
 
             options.value.push({id: stopId, name: stopName, abbreviation: stopAbbreviation})
 
@@ -144,6 +149,7 @@ function filterFn (val, update, abort) {
           let regex = /(\d{8})\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/
           if (props.type == "connections") {
             // this regex will include address matches
+            // TODO regex nochmal anschauen
             regex = /(\d{8}|^streetID:.*|$|^poiID:.*|$)\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
           }
           foundPoints.forEach((point) => {

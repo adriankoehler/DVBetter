@@ -53,7 +53,7 @@ const stationIdOrigin = ref("")
 const stationIdDestination = ref("")
 
 // TODOLATER maybe include the correct number of | in the non-capturing groups
-const regex = /(\d{8}|(?:streetID:.*)|(?:poiID:.*))-(\d{8}|(?:streetID:.*)|(?:poiID:.*))/
+const regex = /(\d{8}|(?:streetID:.*)|(?:poiID:.*)|(?:coord:.*))-(\d{8}|(?:streetID:.*)|(?:poiID:.*)|(?:coord:.*))/
 const match = connectionId.match(regex)
 if (match[1] && match[2]) {
   stationIdOrigin.value = match[1] //f.e.: Hbf=33000028 or some poi/streetID string
@@ -153,7 +153,8 @@ async function getPointInfo (stationOrPointID) {
     })
   } else {
     const foundPoints = response.data.Points
-    const regex = /(?:\d{8}|^streetID:.*|$|^poiID:.*|$)\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
+    // const regex = /(?:\d{8}|^streetID:.*|$|^poiID:.*|$)\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
+    const regex = /(?:\d{8}|^streetID:.*|^poiID:.*|^coord:.*)\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
 
     const match = foundPoints[0].match(regex)
     console.log(match);
