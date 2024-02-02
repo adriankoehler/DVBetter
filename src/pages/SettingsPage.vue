@@ -21,6 +21,10 @@
 <script setup>
 import { ref } from 'vue'
 import { Preferences } from '@capacitor/preferences';
+// import { setCssVar } from 'quasar'
+
+// TODOLATER add themes
+// setCssVar('light', '#DDD')
 
 const startPageModel = ref("stations")
 getStartpage().then((response) => startPageModel.value = response)

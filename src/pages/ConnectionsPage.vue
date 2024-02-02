@@ -47,6 +47,7 @@ const suggestedConnections = ref([])
 const suggestionsLoading = ref(true)
 
 settingsFunctions.getBookmarkedConnections().then(response => {
+  // TODO should also include street/point ids now that connections support it
   // TODOLATER clean up this mess (+what if no station match)
   response.forEach(connectionId => {
     const stationMatches = connectionId.match(/^(\d{8})-(\d{8})$/)
