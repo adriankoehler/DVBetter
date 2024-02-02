@@ -29,11 +29,11 @@
 
 <script setup>
 import { ref } from 'vue'
+import { settingsFunctions } from 'stores/helperFunctions.js'
+import { getSuggestedIds, STATION_SEARCH_HISTORY_KEY } from 'src/stores/search-history.js'
 import SearchArea from 'components/SearchArea.vue'
 import ListEntry from 'components/ListEntry.vue'
-import { settingsFunctions } from 'stores/helperFunctions.js'
 import stationsJson from 'assets/stations_dresden.json'
-import { getSuggestedIds, STATION_SEARCH_HISTORY_KEY } from 'src/stores/search-history.js'
 
 const bookmarkedStations = ref([])
 const suggestedStations = ref([])
@@ -50,9 +50,9 @@ getSuggestedIds(STATION_SEARCH_HISTORY_KEY ).then(response => {
   suggestionsLoading.value = false
   response.forEach(stationId => {
     const stationData = stationsJson.features.filter(d => d.properties.id == stationId)
-    console.log(stationData)
-    // FIXME stationData[0] is undefined (when data could be found in stationsJson)
-    suggestedStations.value.push({id: stationId, name: stationData[0].properties.name, abbreviation: stationData[0].properties.abbreviation})
+    if (stationData && stationData.length > 0) {
+      suggestedStations.value.push({id: stationId, name: stationData[0].properties.name, abbreviation: stationData[0].properties.abbreviation})
+    }
   });
 })
 </script>
