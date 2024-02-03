@@ -1,6 +1,10 @@
+import { useQuasar } from "quasar";
+import { api } from "boot/axios";
 import { Preferences } from '@capacitor/preferences';
-import beta from 'assets/BETA2007.gsb?url'
 import proj4 from 'proj4'
+import beta from 'assets/BETA2007.gsb?url'
+
+const $q = useQuasar()
 
 export const dateFunctions = {
     // somewhat hacky way of deciphering the date string returned in the VVO API via regex capture groups and turn it into a date object
@@ -128,7 +132,9 @@ export const settingsFunctions = {
   // iterates through all connections in the preferences and returns an array of all connection-IDs that are currently bookmarked (value: true)
   getBookmarkedConnections: async () => {
     const keys = await Preferences.keys()
-    const connections = keys.keys.filter(key => key.match(/^\d{8}-\d{8}$/))
+    // matches the pattern [stationId or point]-[stationId or point] not ending with "_offline"
+    const regex = /(^\d{8}|(?:streetID:.*)|(?:poiID:.*)|(?:coord:.*))-(\d{8}$|(?:(?:streetID:.*)|(?:poiID:.*)|(?:coord:.*))(?<!_offline)$)/
+    const connections = keys.keys.filter(key => key.match(regex))
 
     let bookmarkedConnections = []
     for (const connectionId of connections) {
@@ -159,5 +165,44 @@ export const miscFunctions = {
       return "directions_railway_filled"
     }
     return "help_center" // unknown mot
+  },
+
+  // returns an array with name and abbreviation for a given stationId or point
+  // in the form of ["name", "abbr"?]
+  getPointInfo: async (stationOrPointID) => {
+    let response = await api.post('tr/pointfinder', {
+      query: stationOrPointID,
+      limit: 1,
+      regionalOnly: true,
+      stopShortcuts: true
+    })
+
+    if(response.data.Status.Code !== "Ok"){
+      $q.notify({
+        color: 'negative',
+        message: 'An API error occurred',
+        caption: response.data.Status.Message,
+        icon: 'report_problem'
+      })
+    } else {
+      const foundPoints = response.data.Points
+      const regex = /(\d{8}|^streetID:.*|^poiID:.*|^coord:.*)\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
+
+      const match = foundPoints[0].match(regex)
+      if (match[0] && match[1]) {
+        const id = match[1]
+        const name = match[2]
+        const abbreviation = match[3] ?? ""
+        return [id, name, abbreviation]
+      } else {
+        $q.notify({
+          color: 'negative',
+          message: 'An error occurred',
+          caption: 'A point was returned but a name could not be fetched from the return value',
+          icon: 'report_problem'
+        })
+      }
+    }
+    return ["0", "/", ""] // in case of error, still return something (but "/" as name and no abbr.)
   }
 }

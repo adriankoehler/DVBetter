@@ -38,7 +38,7 @@ import { ref } from 'vue'
 import SearchArea from 'components/SearchArea.vue'
 import ListEntry from 'components/ListEntry.vue'
 
-import { settingsFunctions } from 'stores/helperFunctions.js'
+import {miscFunctions, settingsFunctions} from 'stores/helperFunctions.js'
 import stationsJson from 'assets/stations_dresden.json'
 import { getSuggestedIds, CONNECTION_SEARCH_HISTORY_KEY } from 'src/stores/search-history.js'
 
@@ -46,19 +46,23 @@ const bookmarkedConnections = ref([])
 const suggestedConnections = ref([])
 const suggestionsLoading = ref(true)
 
-settingsFunctions.getBookmarkedConnections().then(response => {
-  // TODO should also include street/point ids now that connections support it
+settingsFunctions.getBookmarkedConnections().then(async response => {
   // TODOLATER clean up this mess (+what if no station match)
-  response.forEach(connectionId => {
-    const stationMatches = connectionId.match(/^(\d{8})-(\d{8})$/)
-    const stationData1 = stationsJson.features.filter(d => d.properties.id === stationMatches[1])
-    const stationData2 = stationsJson.features.filter(d => d.properties.id === stationMatches[2])
-    bookmarkedConnections.value.push({connectionId: connectionId, stations: [
-      {id: stationData1[0].properties.id, name: stationData1[0].properties.name, abbreviation: stationData1[0].properties.abbreviation},
-      {id: stationData2[0].properties.id, name: stationData2[0].properties.name, abbreviation: stationData2[0].properties.abbreviation}
-    ]})
-  })
+  for (const connectionId of response) {
+    const regex = /(\d{8}|(?:streetID:.*)|(?:poiID:.*)|(?:coord:.*))-(\d{8}|(?:streetID:.*)|(?:poiID:.*)|(?:coord:.*))/
+    const stationMatches = connectionId.match(regex)
+
+    const stationData1 = await miscFunctions.getPointInfo(stationMatches[1])
+    const stationData2 = await miscFunctions.getPointInfo(stationMatches[2])
+    bookmarkedConnections.value.push({
+      connectionId: connectionId, stations: [
+        {id: stationData1[0], name: stationData1[1], abbreviation: stationData1[2]},
+        {id: stationData2[0], name: stationData2[1], abbreviation: stationData2[2]}
+      ]
+    })
+  }
 })
+
 getSuggestedIds(CONNECTION_SEARCH_HISTORY_KEY).then(response => {
   suggestionsLoading.value = false
 

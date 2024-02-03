@@ -32,7 +32,7 @@ import { ref } from 'vue'
 import { useRoute } from "vue-router"
 import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
-import { dateFunctions, settingsFunctions } from "stores/helperFunctions";
+import {dateFunctions, miscFunctions, settingsFunctions} from "stores/helperFunctions";
 import { Preferences } from "@capacitor/preferences";
 import ConnectionEntry from 'components/ConnectionEntry.vue'
 
@@ -136,59 +136,21 @@ function fetchConnections() {
     })
 }
 
-async function getPointInfo (stationOrPointID) {
-  let response = await api.post('tr/pointfinder', {
-      query: stationOrPointID,
-      limit: 1,
-      regionalOnly: true,
-      stopShortcuts: true
-    })
-
-  if(response.data.Status.Code !== "Ok"){
-    $q.notify({
-      color: 'negative',
-      message: 'An API error occurred',
-      caption: response.data.Status.Message,
-      icon: 'report_problem'
-    })
-  } else {
-    const foundPoints = response.data.Points
-    // const regex = /(?:\d{8}|^streetID:.*|$|^poiID:.*|$)\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
-    const regex = /(?:\d{8}|^streetID:.*|^poiID:.*|^coord:.*)\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
-
-    const match = foundPoints[0].match(regex)
-    console.log(match);
-    if (match[0] && match[1]) {
-      const name = match[1]
-      const abbreviation = match[2] ?? ""
-      return [name, abbreviation]
-    } else {
-      $q.notify({
-      color: 'negative',
-      message: 'An error occurred',
-      caption: 'A point was returned but a name could not be fetched from the return value',
-      icon: 'report_problem'
-    })
-    }
-  }
-  return ["/", ""] // in case of error, still return something (but "/" as name and no abbr.)
-}
-
 if (connectionId) {
   settingsFunctions.isBookmarked(connectionId).then(response => {
     icon.value = response ? "bookmark" : "bookmark_border"
   })
 
-  getPointInfo(stationIdOrigin.value).then(response => {
+  miscFunctions.getPointInfo(stationIdOrigin.value).then(response => {
     const stationDataOrigin = response
-    stationNameOrigin.value = stationDataOrigin[0]
-    stationAbbreviationOrigin.value = stationDataOrigin[1]
+    stationNameOrigin.value = stationDataOrigin[1]
+    stationAbbreviationOrigin.value = stationDataOrigin[2]
   })
 
-  getPointInfo(stationIdDestination.value).then(response => {
+  miscFunctions.getPointInfo(stationIdDestination.value).then(response => {
     const stationDataDestination = response
-    stationNameDestination.value = stationDataDestination[0]
-    stationAbbreviationDestination.value = stationDataDestination[1]
+    stationNameDestination.value = stationDataDestination[1]
+    stationAbbreviationDestination.value = stationDataDestination[2]
   })
 
   fetchConnections()
