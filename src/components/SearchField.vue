@@ -70,7 +70,7 @@ async function getPosition() {
     assignedstops: true // if true ALSO returns stops that are nearby
   })
     .then((response) => {
-      if(response.data.Status.Code !== "Ok" || response.data.PointStatus !== "Identified"){
+      if(response.data.Status.Code !== "Ok" || response.data.Status.Code !== "OK" || response.data.PointStatus !== "Identified"){
         $q.notify({
           color: 'negative',
           message: 'An API error occurred',
@@ -147,16 +147,15 @@ function filterFn (val, update, abort) {
           const foundPoints = response.data.Points
           console.log(foundPoints)
           let regex = /(\d{8})\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/
-          if (props.type == "connections") {
+          if (props.type === "connections") {
             // this regex will include address matches
-            // TODO regex nochmal anschauen
-            regex = /(\d{8}|^streetID:.*|$|^poiID:.*|$)\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
+            regex = /(\d{8}|^streetID:.*|^poiID:.*)\|.*\|.*\|(.*)\|.*\|.*\|.*\|.*\|([A-Z]{3,4})?/;
           }
           foundPoints.forEach((point) => {
             const match = point.match(regex)
             if (match[1] && match[2]) {
               const stopId = match[1]
-              const stopName = match[2] //TODO das haut ggf nicht mehr hin bei street
+              const stopName = match[2]
               const stopAbbreviation = match[3]
               options.value.push({id: stopId, name: stopName, abbreviation: stopAbbreviation})
             }
