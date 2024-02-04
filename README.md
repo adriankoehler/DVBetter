@@ -38,8 +38,13 @@ npm run format
 ### Build the app for production
 ```bash
 quasar build #web
-quasar build -m capacitor -T android #android
+quasar build -m capacitor -T android --ide #android
 ```
+If there are errors during the build, you may have to:
+- delete the `src-capacitor/android` folder
+- rebuild
+- sync project with gradle files in Android Studio (under "File")
+- build the app in Android Studio (under "Build" → "Make project" / "Build APK")
 
 ### Customize the configuration
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
