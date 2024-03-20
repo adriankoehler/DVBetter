@@ -12,6 +12,18 @@
           {label: 'Connections', value: 'connections'},
         ]"
       />
+      <br>
+      <br>
+      <p>Enable/Disable suggestions</p>
+      <q-btn-toggle
+        v-model="suggestionsToggle"
+        @update:model-value="toggleSuggestions()"
+        toggle-color="primary"
+        :options="[
+          {label: 'On', value: true},
+          {label: 'Off', value: false},
+        ]"
+      />
       <!-- TODO walking speed -->
 <!--      <q-btn @click="getStartpage">get</q-btn>-->
     </div>
@@ -27,7 +39,9 @@ import { Preferences } from '@capacitor/preferences';
 // setCssVar('light', '#DDD')
 
 const startPageModel = ref("stations")
+const suggestionsToggle = ref(true)
 getStartpage().then((response) => startPageModel.value = response)
+getSuggestions().then((response) => suggestionsToggle.value = response)
 
 async function setStartpage() {
   await Preferences.set({
@@ -39,5 +53,17 @@ async function setStartpage() {
 async function getStartpage() {
   const startPage = await Preferences.get({ key: 'startScreen' })
   return startPage.value
+}
+
+async function toggleSuggestions() {
+  await Preferences.set({
+    key: 'suggestions',
+    value: JSON.stringify(suggestionsToggle.value)
+  })
+}
+
+async function getSuggestions() {
+  const suggestions = await Preferences.get({ key: 'suggestions' })
+  return JSON.parse(suggestions.value)
 }
 </script>

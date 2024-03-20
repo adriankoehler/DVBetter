@@ -14,19 +14,21 @@
       />
       <p v-if="bookmarkedConnections.length < 1" class="text-grey-6">(none)</p>
 
-      <h2>Suggestions</h2>
-      <q-skeleton v-show="suggestionsLoading" height="53px" />
-      <list-entry
-        v-for="entry in suggestedConnections"
-        :name="entry.stations[0].name"
-        :name2="entry.stations[1].name"
-        :abbreviation="entry.stations[0].abbreviation"
-        :abbreviation2="entry.stations[1].abbreviation"
-        :stationId="entry.stations[0].id"
-        :stationId2="entry.stations[1].id"
-        :key="entry.connectionId"
-      />
-      <p v-if="suggestedConnections.length < 1 && !suggestionsLoading" class="text-grey-6">(none)</p>
+      <template v-if="suggestionsEnabled">
+        <h2>Suggestions</h2>
+        <q-skeleton v-show="suggestionsLoading" height="53px" />
+        <list-entry
+          v-for="entry in suggestedConnections"
+          :name="entry.stations[0].name"
+          :name2="entry.stations[1].name"
+          :abbreviation="entry.stations[0].abbreviation"
+          :abbreviation2="entry.stations[1].abbreviation"
+          :stationId="entry.stations[0].id"
+          :stationId2="entry.stations[1].id"
+          :key="entry.connectionId"
+        />
+        <p v-if="suggestedConnections.length < 1 && !suggestionsLoading" class="text-grey-6">(none)</p>
+      </template>
     </div>
 
     <search-area type="connections" />
@@ -41,9 +43,11 @@ import ListEntry from 'components/ListEntry.vue'
 import {miscFunctions, settingsFunctions} from 'stores/helperFunctions.js'
 import stationsJson from 'assets/stations_dresden.json'
 import { getSuggestedIds, CONNECTION_SEARCH_HISTORY_KEY } from 'src/stores/search-history.js'
+import {Preferences} from "@capacitor/preferences";
 
 const bookmarkedConnections = ref([])
 const suggestedConnections = ref([])
+const suggestionsEnabled = ref(false)
 const suggestionsLoading = ref(true)
 
 settingsFunctions.getBookmarkedConnections().then(async response => {
@@ -63,20 +67,25 @@ settingsFunctions.getBookmarkedConnections().then(async response => {
   }
 })
 
-getSuggestedIds(CONNECTION_SEARCH_HISTORY_KEY).then(response => {
-  suggestionsLoading.value = false
+Preferences.get({ key: 'suggestions' }).then(startscreenResponse => {
+  if(JSON.parse(startscreenResponse.value)){
+    suggestionsEnabled.value = true;
+    getSuggestedIds(CONNECTION_SEARCH_HISTORY_KEY).then(response => {
+      suggestionsLoading.value = false
 
-  response.forEach(connectionId => {
-    // TODO should also include street/point ids now that connections support it
-    const stationMatches = connectionId.match(/^(\d{8})-(\d{8})$/)
-    if (stationMatches && stationMatches.length > 2) {
-      const stationData1 = stationsJson.features.filter(d => d.properties.id === stationMatches[1])
-      const stationData2 = stationsJson.features.filter(d => d.properties.id === stationMatches[2])
-      suggestedConnections.value.push({connectionId: connectionId, stations: [
-        {id: stationData1[0].properties.id, name: stationData1[0].properties.name, abbreviation: stationData1[0].properties.abbreviation},
-        {id: stationData2[0].properties.id, name: stationData2[0].properties.name, abbreviation: stationData2[0].properties.abbreviation}
-      ]})
-    }
-  })
+      response.forEach(connectionId => {
+        // TODO should also include street/point ids now that connections support it
+        const stationMatches = connectionId.match(/^(\d{8})-(\d{8})$/)
+        if (stationMatches && stationMatches.length > 2) {
+          const stationData1 = stationsJson.features.filter(d => d.properties.id === stationMatches[1])
+          const stationData2 = stationsJson.features.filter(d => d.properties.id === stationMatches[2])
+          suggestedConnections.value.push({connectionId: connectionId, stations: [
+              {id: stationData1[0].properties.id, name: stationData1[0].properties.name, abbreviation: stationData1[0].properties.abbreviation},
+              {id: stationData2[0].properties.id, name: stationData2[0].properties.name, abbreviation: stationData2[0].properties.abbreviation}
+            ]})
+        }
+      })
+    })
+  }
 })
 </script>
