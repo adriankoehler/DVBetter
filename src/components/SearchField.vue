@@ -70,7 +70,6 @@ async function getPosition() {
     assignedstops: true // if true ALSO returns stops that are nearby
   })
     .then((response) => {
-      console.log(response.data.Status.Code)
       if(response.data.Status.Code !== "Ok" || response.data.PointStatus !== "Identified"){
         $q.notify({
           color: 'negative',

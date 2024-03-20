@@ -50,7 +50,7 @@ const arrivalDateReal = dateFunctions.convertVVOToDate(props.departure.RealTime)
 
 // since the Realtime date is not always available, get the scheduled time if necessary
 const arrivalTimeString = dateFunctions.getArrivalTimeString(arrivalDateReal ? arrivalDateReal : arrivalDateScheduled)
-const alreadyLeft = arrivalDateReal ? arrivalDateReal < Date.now() : arrivalDateScheduled < Date.now()
+const alreadyLeft = arrivalDateReal ? arrivalDateReal < Date.now() : arrivalDateScheduled < (Date.now() - 60)
 
 // TODO if cancelled/rerouted=true -> fetch all route changes and get the reason
 </script>

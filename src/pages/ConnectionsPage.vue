@@ -56,6 +56,7 @@ settingsFunctions.getBookmarkedConnections().then(async response => {
     const regex = /(\d{8}|(?:streetID:.*)|(?:poiID:.*)|(?:coord:.*))-(\d{8}|(?:streetID:.*)|(?:poiID:.*)|(?:coord:.*))/
     const stationMatches = connectionId.match(regex)
 
+    //TODO maybe save the name in preferences instead of fetching it every time
     const stationData1 = await miscFunctions.getPointInfo(stationMatches[1])
     const stationData2 = await miscFunctions.getPointInfo(stationMatches[2])
     bookmarkedConnections.value.push({
